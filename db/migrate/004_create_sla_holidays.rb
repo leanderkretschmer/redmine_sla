@@ -3,11 +3,12 @@ class CreateSlaHolidays < ActiveRecord::Migration[6.1]
     create_table :sla_holidays do |t|
       t.string :name, null: false
       t.date :date, null: false
-      t.references :project, foreign_key: true, null: true
+      t.integer :project_id, null: true
 
       t.timestamps
     end
 
     add_index :sla_holidays, :date
+    add_foreign_key :sla_holidays, :projects, column: :project_id, on_delete: :nullify
   end
 end
