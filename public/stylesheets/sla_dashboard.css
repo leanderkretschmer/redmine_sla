@@ -1,0 +1,217 @@
+/* SLA Dashboard Styles */
+
+.sla-stats-overview {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.sla-stats-overview .stat-item {
+  flex: 1;
+  text-align: center;
+  padding: 0.75rem;
+  border-radius: 4px;
+  background: var(--background);
+  border: 1px solid var(--border);
+}
+
+.sla-stats-overview .stat-number {
+  display: block;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.sla-stats-overview .stat-label {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.stat-breached .stat-number { color: #dc3545; }
+.stat-at_risk .stat-number { color: #ffc107; }
+.stat-ok .stat-number { color: #28a745; }
+
+/* Legend */
+.sla-legend {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.legend-dot.green { background: #28a745; }
+.legend-dot.yellow { background: #ffc107; }
+.legend-dot.red { background: #dc3545; }
+
+/* Project Columns Layout */
+.sla-project-columns {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+}
+
+.sla-project-column {
+  flex: 0 0 280px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--background);
+  min-height: 200px;
+}
+
+.column-header {
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--muted-background);
+  border-radius: 6px 6px 0 0;
+}
+
+.column-header h3 {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.count-badge {
+  background: var(--accent);
+  color: white;
+  border-radius: 12px;
+  padding: 0.15rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.column-body {
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-height: 100px;
+}
+
+/* Ticket Cards */
+.sla-ticket-card {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--card-background);
+  display: flex;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+
+.sla-ticket-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-indicator {
+  width: 4px;
+  flex-shrink: 0;
+}
+
+.sla-breached .card-indicator { background: #dc3545; }
+.sla-at_risk .card-indicator { background: #ffc107; }
+.sla-ok .card-indicator { background: #28a745; }
+
+.card-content {
+  padding: 0.5rem;
+  flex: 1;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+
+.ticket-id {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.ticket-id a {
+  text-decoration: none;
+}
+
+.ticket-id a:hover {
+  text-decoration: underline;
+}
+
+.status-badge {
+  font-size: 0.7rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+  text-transform: uppercase;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.sla-breached .status-badge {
+  background: #dc3545;
+  color: white;
+}
+
+.sla-at_risk .status-badge {
+  background: #ffc107;
+  color: #333;
+}
+
+.sla-ok .status-badge {
+  background: #28a745;
+  color: white;
+}
+
+.card-details {
+  font-size: 0.8rem;
+}
+
+.detail-row {
+  margin-bottom: 0.25rem;
+}
+
+.detail-row .label {
+  font-weight: 600;
+  color: var(--muted);
+  margin-right: 0.25rem;
+}
+
+.detail-row .value {
+  color: var(--foreground);
+}
+
+.comment-author {
+  font-weight: 500;
+}
+
+.comment-time,
+.deadline-value {
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.deadline-row .deadline-value {
+  color: var(--foreground);
+  font-weight: 500;
+}
+
+/* No tickets message */
+.sla-no-tickets {
+  text-align: center;
+  padding: 2rem;
+  width: 100%;
+}

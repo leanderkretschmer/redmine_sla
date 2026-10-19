@@ -1,20 +1,31 @@
 # i18n
 de:
+  label_sla_dashboard: 'SLA - Meine Seite'
   label_sla_rule: SLA-Regel
   label_sla_rules: SLA-Regeln
   label_sla_status: SLA-Status
   label_resolution_time: Auflösungszeit
-  label_response_time: Reaktionszeit
+  label_response_time: Reaktionsfrist
   label_sla_breached: SLA verletzt
   label_sla_at_risk: SLA gefährdet
   label_sla_ok: SLA eingehalten
   label_sla_no_sla: Keine SLA
+  label_sla_no_tickets: 'Keine Tickets mit offener SLA-Antwort'
+  label_last_external_comment: Letzter externer Kommentar
+  label_deadline: Frist
+  label_all_projects: Alle Projekte
+  label_all_trackers: Alle Trackertypen
+  label_all_statuses: Alle Status
+  new_sla_rule: Neue SLA-Regel
+  edit_sla_rule: SLA-Regel bearbeiten
   notice_sla_rule_created: SLA-Regel wurde erstellt.
   notice_sla_rule_updated: SLA-Regel wurde aktualisiert.
   notice_sla_rule_deleted: SLA-Regel wurde gelöscht.
   error_sla_rule_not_found: SLA-Regel nicht gefunden.
+  sla_menu: SLA-Übersicht
 
 en:
+  label_sla_dashboard: 'SLA - My Page'
   label_sla_rule: SLA Rule
   label_sla_rules: SLA Rules
   label_sla_status: SLA Status
@@ -24,7 +35,16 @@ en:
   label_sla_at_risk: SLA at Risk
   label_sla_ok: SLA OK
   label_sla_no_sla: No SLA
+  label_sla_no_tickets: 'No tickets with pending SLA response'
+  label_last_external_comment: Last External Comment
+  label_deadline: Deadline
+  label_all_projects: All Projects
+  label_all_trackers: All Trackers
+  label_all_statuses: All Statuses
+  new_sla_rule: New SLA Rule
+  edit_sla_rule: Edit SLA Rule
   notice_sla_rule_created: SLA rule has been created.
   notice_sla_rule_updated: SLA rule has been updated.
   notice_sla_rule_deleted: SLA rule has been deleted.
   error_sla_rule_not_found: SLA rule not found.
+  sla_menu: SLA Overview
