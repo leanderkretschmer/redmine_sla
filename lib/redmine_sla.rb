@@ -1,4 +1,4 @@
-module RedmineSLA
+module RedmineSla
 end
 
 require_relative 'redmine_sla/models/sla_rule'
@@ -11,7 +11,7 @@ require_relative 'redmine_sla/hooks'
 ActiveSupport::Reloader.to_prepare do
 end
 
-module RedmineSLA
+module RedmineSla
   class Setup
     def self.ensure_settings
     end
@@ -19,5 +19,5 @@ module RedmineSLA
 end
 
 Rails.application.config.after_initialize do
-  RedmineSLA::Setup.ensure_settings
+  RedmineSla::Setup.ensure_settings
 end

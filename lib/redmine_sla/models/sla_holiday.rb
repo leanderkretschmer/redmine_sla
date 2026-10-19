@@ -1,4 +1,4 @@
-class RedmineSLA::SlaHoliday < ActiveRecord::Base
+class RedmineSla::SlaHoliday < ActiveRecord::Base
   self.table_name = 'sla_holidays'
 
   belongs_to :project, class_name: 'Project', optional: true

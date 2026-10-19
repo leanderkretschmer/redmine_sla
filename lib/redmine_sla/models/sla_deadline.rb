@@ -1,8 +1,8 @@
-class RedmineSLA::SlaDeadline < ActiveRecord::Base
+class RedmineSla::SlaDeadline < ActiveRecord::Base
   self.table_name = 'sla_deadlines'
 
   belongs_to :issue, class_name: 'Issue'
-  belongs_to :sla_rule, class_name: 'RedmineSLA::SlaRule', optional: true
+  belongs_to :sla_rule, class_name: 'RedmineSla::SlaRule', optional: true
   belongs_to :issue_note, class_name: 'IssueNote', optional: true
 
   scope :pending, -> { where(response_status: 'pending') }

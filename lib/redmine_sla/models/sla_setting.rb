@@ -1,4 +1,4 @@
-class RedmineSLA::SlaSetting < ActiveRecord::Base
+class RedmineSla::SlaSetting < ActiveRecord::Base
   self.table_name = 'sla_settings'
 
   belongs_to :project, class_name: 'Project', optional: true

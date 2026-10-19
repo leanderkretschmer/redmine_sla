@@ -1,4 +1,4 @@
-class RedmineSLA::SlaRule < ActiveRecord::Base
+class RedmineSla::SlaRule < ActiveRecord::Base
   self.table_name = 'sla_rules'
 
   belongs_to :project, class_name: 'Project', optional: true
@@ -13,9 +13,9 @@ class RedmineSLA::SlaRule < ActiveRecord::Base
 
   attribute :working_hours, :json, default: -> {
     {
-      sod_hour: RedmineSLA::Setting.get(:sod_hour, 7),
-      eod_hour: RedmineSLA::Setting.get(:eod_hour, 18),
-      puffer_minutes: RedmineSLA::Setting.get(:puffer_minutes, 120)
+      sod_hour: RedmineSla::Setting.get(:sod_hour, 7),
+      eod_hour: RedmineSla::Setting.get(:eod_hour, 18),
+      puffer_minutes: RedmineSla::Setting.get(:puffer_minutes, 120)
     }
   }
 

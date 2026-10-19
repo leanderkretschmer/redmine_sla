@@ -6,7 +6,7 @@ class SlaDashboardController < ApplicationController
   def index
     @projects = Project.active.to_a
 
-    @deadlines = RedmineSLA::SlaDeadline.pending.includes(:issue, :sla_rule, :issue_note).to_a
+    @deadlines = RedmineSla::SlaDeadline.pending.includes(:issue, :sla_rule, :issue_note).to_a
     @deadlines = @deadlines.select { |d| @projects.any? { |p| p.id == d.issue.project_id } }
 
     @project_deadlines = {}

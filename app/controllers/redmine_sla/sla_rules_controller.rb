@@ -1,16 +1,16 @@
-class RedmineSLA::SlaRulesController < ApplicationController
+class RedmineSla::SlaRulesController < ApplicationController
   before_action :require_authentication
 
   def index
-    @sla_rules = RedmineSLA::SlaRule.sorted_by_priority
+    @sla_rules = RedmineSla::SlaRule.sorted_by_priority
   end
 
   def new
-    @sla_rule = RedmineSLA::SlaRule.new
+    @sla_rule = RedmineSla::SlaRule.new
   end
 
   def create
-    @sla_rule = RedmineSLA::SlaRule.new(sla_rule_params)
+    @sla_rule = RedmineSla::SlaRule.new(sla_rule_params)
     if @sla_rule.save
       redirect_to sla_rules_path, notice: l(:notice_sla_rule_created)
     else
@@ -19,11 +19,11 @@ class RedmineSLA::SlaRulesController < ApplicationController
   end
 
   def edit
-    @sla_rule = RedmineSLA::SlaRule.find(params[:id])
+    @sla_rule = RedmineSla::SlaRule.find(params[:id])
   end
 
   def update
-    @sla_rule = RedmineSLA::SlaRule.find(params[:id])
+    @sla_rule = RedmineSla::SlaRule.find(params[:id])
     if @sla_rule.update(sla_rule_params)
       redirect_to sla_rules_path, notice: l(:notice_sla_rule_updated)
     else
@@ -32,7 +32,7 @@ class RedmineSLA::SlaRulesController < ApplicationController
   end
 
   def destroy
-    @sla_rule = RedmineSLA::SlaRule.find(params[:id])
+    @sla_rule = RedmineSla::SlaRule.find(params[:id])
     @sla_rule.destroy
     redirect_to sla_rules_path, notice: l(:notice_sla_rule_deleted)
   end
