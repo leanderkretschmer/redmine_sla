@@ -1,5 +1,7 @@
 class CreateSlaDeadlines < ActiveRecord::Migration[6.1]
-  def change
+  def up
+    drop_table :sla_deadlines if table_exists?(:sla_deadlines)
+
     create_table :sla_deadlines do |t|
       t.integer :issue_id, null: false
       t.bigint :sla_rule_id, null: true
@@ -20,6 +22,10 @@ class CreateSlaDeadlines < ActiveRecord::Migration[6.1]
 
     add_foreign_key :sla_deadlines, :issues, column: :issue_id, on_delete: :cascade
     add_foreign_key :sla_deadlines, :sla_rules, column: :sla_rule_id, on_delete: :nullify
-    # FK to :notes skipped — notes.id ist int(11), sla_deadlines.issue_note_id ist bigint
+    # FK zu :notes — übersprungen (bigint vs int(11))
+  end
+
+  def down
+    drop_table :sla_deadlines
   end
 end

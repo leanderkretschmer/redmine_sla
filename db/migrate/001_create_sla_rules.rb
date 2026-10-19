@@ -1,5 +1,6 @@
 class CreateSlaRules < ActiveRecord::Migration[6.1]
-  def change
+  def up
+    drop_table :sla_rules if table_exists?(:sla_rules)
     create_table :sla_rules do |t|
       t.string :name, null: false
       t.text :description
@@ -19,5 +20,9 @@ class CreateSlaRules < ActiveRecord::Migration[6.1]
 
     add_foreign_key :sla_rules, :projects, column: :project_id, on_delete: :nullify
     add_foreign_key :sla_rules, :trackers, column: :tracker_id, on_delete: :nullify
+  end
+
+  def down
+    drop_table :sla_rules
   end
 end

@@ -1,5 +1,6 @@
 class CreateSlaSettings < ActiveRecord::Migration[6.1]
-  def change
+  def up
+    drop_table :sla_settings if table_exists?(:sla_settings)
     create_table :sla_settings do |t|
       t.integer :project_id, null: true
       t.integer :response_time_minutes, null: false
@@ -14,5 +15,9 @@ class CreateSlaSettings < ActiveRecord::Migration[6.1]
 
     add_index :sla_settings, :project_id
     add_foreign_key :sla_settings, :projects, column: :project_id, on_delete: :nullify
+  end
+
+  def down
+    drop_table :sla_settings
   end
 end
