@@ -1,3 +1,6 @@
+module RedmineSLA
+end
+
 require_relative 'redmine_sla/models/sla_rule'
 require_relative 'redmine_sla/models/sla_deadline'
 require_relative 'redmine_sla/models/sla_setting'
