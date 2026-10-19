@@ -27,13 +27,6 @@
       </td>
     </tr>
     <tr>
-      <td><%= f.label :status_id, l(:field_status) %></td>
-      <td>
-        <%= f.collection_select :status_id, IssueStatus.all, :id, :name,
-              { include_hidden: false, include_blank: l(:label_all_statuses) } %>
-      </td>
-    </tr>
-    <tr>
       <td><%= f.label :priority, l(:field_priority) %></td>
       <td><%= f.number_field :priority, min: 0 %></td>
     </tr>

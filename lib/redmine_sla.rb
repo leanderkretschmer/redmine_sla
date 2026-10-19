@@ -1,7 +1,20 @@
-# SLA Plugin for Redmine
-# https://github.com/leanderkretschmer/redmine_sla
+require_relative 'redmine_sla/models/sla_rule'
+require_relative 'redmine_sla/models/sla_deadline'
+require_relative 'redmine_sla/models/sla_setting'
+require_relative 'redmine_sla/models/sla_holiday'
+require_relative 'redmine_sla/calendar/sla_calendar'
+require_relative 'redmine_sla/hooks'
 
-require 'redmine_sla/engine'
+ActiveSupport::Reloader.to_prepare do
+end
 
-# Load engine
-require_relative 'redmine_sla/engine'
+module RedmineSLA
+  class Setup
+    def self.ensure_settings
+    end
+  end
+end
+
+Rails.application.config.after_initialize do
+  RedmineSLA::Setup.ensure_settings
+end

@@ -1,4 +1,4 @@
-class SlaHoliday < ActiveRecord::Base
+class RedmineSLA::SlaHoliday < ActiveRecord::Base
   self.table_name = 'sla_holidays'
 
   belongs_to :project, class_name: 'Project', optional: true
@@ -6,7 +6,6 @@ class SlaHoliday < ActiveRecord::Base
   validates :date, presence: true
   validates :name, presence: true
 
-  # Check if a given date is a holiday for the project
   def self.is_holiday?(date, project = nil)
     conditions = { date: date }
     conditions[:project_id] = project.id if project

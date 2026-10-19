@@ -5,7 +5,6 @@
   <%= l(:label_sla_dashboard) %>
 </h2>
 
-<!-- Stats Overview -->
 <div class="sla-stats-overview">
   <div class="stat-item stat-breached">
     <span class="stat-number"><%= @stats[:breached] %></span>
@@ -21,14 +20,12 @@
   </div>
 </div>
 
-<!-- Legend -->
 <div class="sla-legend">
-  <span class="legend-item legend-green"><span class="legend-dot green"></span> <%= l(:label_sla_ok) %></span>
-  <span class="legend-item legend-yellow"><span class="legend-dot yellow"></span> <%= l(:label_sla_at_risk) %></span>
-  <span class="legend-item legend-red"><span class="legend-dot red"></span> <%= l(:label_sla_breached) %></span>
+  <span class="legend-item"><span class="legend-dot green"></span> <%= l(:label_sla_ok) %></span>
+  <span class="legend-item"><span class="legend-dot yellow"></span> <%= l(:label_sla_at_risk) %></span>
+  <span class="legend-item"><span class="legend-dot red"></span> <%= l(:label_sla_breached) %></span>
 </div>
 
-<!-- Project Columns -->
 <div class="sla-project-columns">
   <% @project_deadlines.each do |project, deadlines| %>
     <div class="sla-project-column">
@@ -39,7 +36,40 @@
 
       <div class="column-body">
         <% deadlines.each do |deadline| %>
-          <%= render partial: 'sla_ticket_card', locals: { deadline: deadline } %>
+          <div class="sla-ticket-card sla-<%= deadline.status_label %>">
+            <div class="card-indicator"></div>
+            <div class="card-content">
+              <div class="card-header">
+                <span class="ticket-id">
+                  <%= link_to "##{deadline.issue.id} #{h(deadline.issue.subject)}", issue_path(deadline.issue) %>
+                </span>
+                <span class="status-badge sla-<%= deadline.status_label %>">
+                  <%= l("label_sla_#{deadline.status_label}") %>
+                </span>
+              </div>
+              <div class="card-details">
+                <% if deadline.issue.assigned_to %>
+                  <div class="detail-row">
+                    <span class="label"><%= l(:field_assigned_to) %>:</span>
+                    <span class="value"><%= avatar(deadline.issue.assigned_to, size: "18") %> <%= link_to h(deadline.issue.assigned_to.name), member_path(deadline.issue.project, deadline.issue.assigned_to) %></span>
+                  </div>
+                <% end %>
+                <% if deadline.issue_note %>
+                  <div class="detail-row">
+                    <span class="label"><%= l(:label_last_external_comment) %>:</span>
+                    <span class="value">
+                      <span class="comment-author"><%= h(deadline.issue_note.<EMAIL>) %></span>
+                      <span class="comment-time"><%= format_time(deadline.issue_note.created_at) %></span>
+                    </span>
+                  </div>
+                <% end %>
+                <div class="detail-row deadline-row">
+                  <span class="label"><%= l(:label_deadline) %>:</span>
+                  <span class="value deadline-value"><%= deadline.internal_deadline.strftime('%d.%m.%Y %H:%M') %></span>
+                </div>
+              </div>
+            </div>
+          </div>
         <% end %>
       </div>
     </div>

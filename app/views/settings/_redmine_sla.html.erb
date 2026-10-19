@@ -1,0 +1,45 @@
+<%# Plugin Settings %>
+<h2><%= l(:label_sla_settings) %></h2>
+
+<form id="redmine_sla_settings" action="<%= settings_path(:plugin, 'redmine_sla') %>" method="post">
+  <%= hidden_field_tag('tab', 'general') %>
+
+  <table class="list">
+    <tr>
+      <td><label for="setting_default_response_time_minutes"><%= l(:label_response_time) %></label></td>
+      <td>
+        <%= text_field_tag('settings[default_response_time_minutes]',
+                            settings['default_response_time_minutes'] || '240',
+                            size: 10) %>
+        <span class="help"><%= l(:label_minutes) %></span>
+      </td>
+    </tr>
+    <tr>
+      <td><label for="setting_default_puffer_minutes"><%= l(:label_puffer) %></label></td>
+      <td>
+        <%= text_field_tag('settings[default_puffer_minutes]',
+                            settings['default_puffer_minutes'] || '120',
+                            size: 10) %>
+        <span class="help"><%= l(:label_minutes) %></span>
+      </td>
+    </tr>
+    <tr>
+      <td><label for="setting_default_sod_hour"><%= l(:label_start_of_day) %></label></td>
+      <td>
+        <%= text_field_tag('settings[default_sod_hour]',
+                            settings['default_sod_hour'] || '7',
+                            size: 5) %>
+      </td>
+    </tr>
+    <tr>
+      <td><label for="setting_default_eod_hour"><%= l(:label_end_of_day) %></label></td>
+      <td>
+        <%= text_field_tag('settings[default_eod_hour]',
+                            settings['default_eod_hour'] || '18',
+                            size: 5) %>
+      </td>
+    </tr>
+  </table>
+
+  <p><%= submit_tag l(:button_save) %></p>
+</form>

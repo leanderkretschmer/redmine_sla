@@ -10,7 +10,6 @@
       <th><%= l(:label_sla_rule) %></th>
       <th><%= l(:field_project) %></th>
       <th><%= l(:field_tracker) %></th>
-      <th><%= l(:field_status) %></th>
       <th><%= l(:label_resolution_time) %></th>
       <th><%= l(:label_response_time) %></th>
       <th><%= l(:field_priority) %></th>
@@ -23,7 +22,6 @@
         <td><%= link_to h(rule.name), edit_sla_rule_path(rule) %></td>
         <td><%= rule.project ? h(rule.project.name) : l(:label_all_projects) %></td>
         <td><%= rule.tracker ? h(rule.tracker.name) : l(:label_all_trackers) %></td>
-        <td><%= rule.status ? h(rule.status.name) : l(:label_all_statuses) %></td>
         <td><%= rule.resolution_time_minutes ? "#{rule.resolution_time_minutes} min" : '-' %></td>
         <td><%= rule.response_time_minutes ? "#{rule.response_time_minutes} min" : '-' %></td>
         <td><%= rule.priority %></td>
