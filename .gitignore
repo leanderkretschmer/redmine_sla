@@ -1,0 +1,7 @@
+*.rb~
+*.log
+*.tmp
+*.swp
+.DS_Store
+*.pyc
+__pycache__/

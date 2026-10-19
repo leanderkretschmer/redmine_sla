@@ -1,0 +1,53 @@
+= Redmine SLA Plugin
+
+== Description
+
+Ein Redmine Plugin zur Verwaltung von SLA (Service Level Agreements) in Redmine.
+
+== Features
+
+- SLA-Regeln für Projektvorlagen und Issue-Status erstellen
+- SLA-Einhaltung bei Issues überwachen
+- Benachrichtigungen bei SLA-Verletzungen
+
+== Requirements
+
+- Redmine 5.x
+
+== Installation
+
+1. Clone this plugin into your Redmine plugins directory:
+
+    cd /path/to/redmine
+    git clone https://github.com/leanderkretschmer/redmine_sla.git plugins/redmine_sla
+
+2. Install dependencies:
+
+    bundle install
+
+3. Run migrations:
+
+    RAILS_ENV=production bundle exec rake redmine:plugins:migrate
+
+4. Restart Redmine
+
+== Uninstall
+
+1. Run reverse migration:
+
+    RAILS_ENV=production bundle exec rake redmine:plugins:migrate NAME=redmine_sla VERSION=0
+
+2. Remove the plugin directory:
+
+    rm -rf plugins/redmine_sla
+
+3. Restart Redmine
+
+== License
+
+MIT
+
+== Author
+
+Leander Kretschmer
+https://github.com/leanderkretschmer

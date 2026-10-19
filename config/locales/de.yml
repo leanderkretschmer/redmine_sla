@@ -1,0 +1,30 @@
+# i18n
+de:
+  label_sla_rule: SLA-Regel
+  label_sla_rules: SLA-Regeln
+  label_sla_status: SLA-Status
+  label_resolution_time: Auflösungszeit
+  label_response_time: Reaktionszeit
+  label_sla_breached: SLA verletzt
+  label_sla_at_risk: SLA gefährdet
+  label_sla_ok: SLA eingehalten
+  label_sla_no_sla: Keine SLA
+  notice_sla_rule_created: SLA-Regel wurde erstellt.
+  notice_sla_rule_updated: SLA-Regel wurde aktualisiert.
+  notice_sla_rule_deleted: SLA-Regel wurde gelöscht.
+  error_sla_rule_not_found: SLA-Regel nicht gefunden.
+
+en:
+  label_sla_rule: SLA Rule
+  label_sla_rules: SLA Rules
+  label_sla_status: SLA Status
+  label_resolution_time: Resolution Time
+  label_response_time: Response Time
+  label_sla_breached: SLA Breached
+  label_sla_at_risk: SLA at Risk
+  label_sla_ok: SLA OK
+  label_sla_no_sla: No SLA
+  notice_sla_rule_created: SLA rule has been created.
+  notice_sla_rule_updated: SLA rule has been updated.
+  notice_sla_rule_deleted: SLA rule has been deleted.
+  error_sla_rule_not_found: SLA rule not found.

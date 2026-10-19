@@ -1,0 +1,41 @@
+<h2><%= l(:label_sla_dashboard) %></h2>
+
+<div class="sla-stats">
+  <div class="stat-card">
+    <h3><%= l(:label_sla_ok) %></h3>
+    <p class="stat-value"><%= @sla_stats[:ok] || 0 %></p>
+  </div>
+  <div class="stat-card">
+    <h3><%= l(:label_sla_at_risk) %></h3>
+    <p class="stat-value"><%= @sla_stats[:at_risk] || 0 %></p>
+  </div>
+  <div class="stat-card">
+    <h3><%= l(:label_sla_breached) %></h3>
+    <p class="stat-value"><%= @sla_stats[:breached] || 0 %></p>
+  </div>
+</div>
+
+<h3><%= l(:label_recent_sla_violations) %></h3>
+
+<table class="list">
+  <thead>
+    <tr>
+      <th><%= l(:field_subject) %></th>
+      <th><%= l(:field_project) %></th>
+      <th><%= l(:field_priority) %></th>
+      <th><%= l(:created_on) %></th>
+      <th><%= l(:label_sla_status) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @sla_violations.each do |issue| %>
+      <tr>
+        <td><%= link_to h(issue.subject), issue_path(issue) %></td>
+        <td><%= link_to h(issue.project.name), project_path(issue.project) %></td>
+        <td><%= issue.priority.name %></td>
+        <td><%= format_time(issue.created_at) %></td>
+        <td><%= issue.sla_status.upcase %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
