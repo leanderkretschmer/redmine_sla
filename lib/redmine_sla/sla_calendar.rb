@@ -1,7 +1,7 @@
 # SLA Business Hours Calendar
 module RedmineSla
-  module Calendar
-    def self.calculate(comment_time, response_time_minutes, sod_hour: 7, eod_hour: 18,
+  class SlaCalendar
+      def self.calculate(comment_time, response_time_minutes, sod_hour: 7, eod_hour: 18,
                        puffer_minutes: 120, exclude_weekends: true, holidays: [])
       comment_time = comment_time.to_time
       internal_eod = comment_time + response_time_minutes * 60
