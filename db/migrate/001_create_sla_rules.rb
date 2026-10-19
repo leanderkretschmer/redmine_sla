@@ -3,8 +3,8 @@ class CreateSlaRules < ActiveRecord::Migration[6.1]
     create_table :sla_rules do |t|
       t.string :name, null: false
       t.text :description
-      t.references :project, foreign_key: true, null: true
-      t.references :tracker, foreign_key: { to_table: :trackers }, null: true
+      t.integer :project_id, null: true
+      t.integer :tracker_id, null: true
       t.integer :status_id, null: true
 
       t.integer :priority, null: false, default: 1
@@ -16,5 +16,8 @@ class CreateSlaRules < ActiveRecord::Migration[6.1]
 
     add_index :sla_rules, :priority
     add_index :sla_rules, [:project_id, :tracker_id, :status_id]
+
+    add_foreign_key :sla_rules, :projects, column: :project_id, on_delete: :nullify
+    add_foreign_key :sla_rules, :trackers, column: :tracker_id, on_delete: :nullify
   end
 end
