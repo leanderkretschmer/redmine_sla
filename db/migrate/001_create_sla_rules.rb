@@ -5,7 +5,7 @@ class CreateSlaRules < ActiveRecord::Migration[6.1]
       t.text :description
       t.references :project, foreign_key: true, null: true
       t.references :tracker, foreign_key: { to_table: :trackers }, null: true
-      t.references :issue_status, foreign_key: { to_table: :issue_statuses }, null: true, as: :status
+      t.integer :status_id, null: true
 
       t.integer :priority, null: false, default: 1
       t.integer :resolution_time_minutes
