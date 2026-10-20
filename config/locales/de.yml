@@ -46,6 +46,15 @@ de:
   field_sla_exclude_holidays: Feiertage ausnehmen
   field_sla_time_zone: Zeitzone
 
+  label_sla_internal_users: Interne Nutzer (Mitarbeiter)
+  field_sla_admins_internal: Administratoren gelten als intern
+  field_sla_internal_group: Zusätzliche interne Gruppe
+  text_sla_internal_users_help: >-
+    Als intern gelten die im Human-Resources-Plugin hinterlegten Mitarbeiter (Anstellungsart oder Eintrittsdatum
+    gesetzt, Zeit- oder Abwesenheitsbuchungen vorhanden). Nur Beiträge interner Nutzer erledigen eine Antwortfrist;
+    alle anderen Beiträge (E-Mail-Absender, TYPO3, API-Nutzer) lösen eine aus. Ist das HR-Plugin nicht installiert,
+    gelten alle aktiven Benutzerkonten als intern.
+
   notice_sla_rule_created: Sonderregel wurde erstellt.
   notice_sla_rule_updated: Sonderregel wurde aktualisiert.
   notice_sla_rule_deleted: Sonderregel wurde gelöscht.

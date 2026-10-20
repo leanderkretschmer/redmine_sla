@@ -22,7 +22,9 @@ Redmine::Plugin.register :redmine_sla do
     'default_puffer_minutes' => '120',
     'default_sod_hour' => '7',
     'default_eod_hour' => '18',
-    'time_zone' => 'Europe/Berlin'
+    'time_zone' => 'Europe/Berlin',
+    'admins_internal' => '1',
+    'internal_group_id' => ''
   }, partial: 'settings/redmine_sla'
 
   # Eigene Seite unter Administration

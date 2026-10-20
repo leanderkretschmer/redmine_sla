@@ -46,6 +46,14 @@ en:
   field_sla_exclude_holidays: Exclude holidays
   field_sla_time_zone: Time zone
 
+  label_sla_internal_users: Internal users (employees)
+  field_sla_admins_internal: Administrators count as internal
+  field_sla_internal_group: Additional internal group
+  text_sla_internal_users_help: >-
+    Internal users are the employees registered in the Human Resources plugin (employment type or start date set,
+    time or absence entries present). Only posts by internal users clear a response deadline; all other posts
+    (e-mail senders, TYPO3, API users) create one. Without the HR plugin all active accounts count as internal.
+
   notice_sla_rule_created: Special rule has been created.
   notice_sla_rule_updated: Special rule has been updated.
   notice_sla_rule_deleted: Special rule has been deleted.

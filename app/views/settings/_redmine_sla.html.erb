@@ -30,3 +30,18 @@
                  options_for_select(ActiveSupport::TimeZone.all.map { |z| [z.to_s, z.name] }, settings['time_zone'] || 'Europe/Berlin') %>
   <em class="info"><%= l(:text_sla_time_zone_setting_info) %></em>
 </p>
+
+<fieldset class="box">
+  <legend><%= l(:label_sla_internal_users) %></legend>
+  <p class="sla-help"><%= l(:text_sla_internal_users_help) %></p>
+  <p>
+    <label for="settings_admins_internal"><%= l(:field_sla_admins_internal) %></label>
+    <%= hidden_field_tag 'settings[admins_internal]', '0', id: nil %>
+    <%= check_box_tag 'settings[admins_internal]', '1', settings['admins_internal'].to_s != '0' %>
+  </p>
+  <p>
+    <label for="settings_internal_group_id"><%= l(:field_sla_internal_group) %></label>
+    <%= select_tag 'settings[internal_group_id]',
+                   options_for_select([[l(:label_none), '']] + Group.givable.sorted.map { |g| [g.name, g.id] }, settings['internal_group_id']) %>
+  </p>
+</fieldset>
