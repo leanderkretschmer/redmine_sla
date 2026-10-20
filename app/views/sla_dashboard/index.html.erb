@@ -1,6 +1,29 @@
-<h2><%= l(:label_sla_dashboard) %></h2>
+<div class="contextual">
+  <% if User.current.admin? %>
+    <%= link_to l(:label_sla_admin), sla_admin_path, class: 'icon icon-settings' %>
+  <% end %>
+</div>
+
+<h2><%= l(:label_sla_dashboard) %><%= " – #{h(@project.name)}" if @project %></h2>
 
 <%= render partial: 'sla_dashboard/stats', locals: { board: @board } %>
 <%= render partial: 'sla_dashboard/board', locals: { board: @board } %>
+
+<% embed_url = sla_dashboard_url(embed: 1, key: RedmineSla.feed_key_for(User.current), project_id: @project&.identifier) %>
+<fieldset class="collapsible collapsed sla-embed">
+  <legend onclick="toggleFieldset(this);" class="icon icon-collapsed"><%= sprite_icon('angle-right', l(:label_sla_embed)) %></legend>
+  <div style="display: none;">
+    <p class="sla-help"><%= l(:text_sla_embed_help) %></p>
+    <p>
+      <label for="sla-embed-url"><%= l(:label_sla_embed_url) %></label><br>
+      <%= text_field_tag 'sla-embed-url', embed_url, size: 100, readonly: true, onclick: 'this.select();' %>
+    </p>
+    <p>
+      <label for="sla-embed-html"><%= l(:label_sla_embed_html) %></label><br>
+      <%= text_area_tag 'sla-embed-html', %(<iframe src="#{embed_url}&refresh=300" style="width:100%;height:600px;border:0;" title="SLA"></iframe>), rows: 2, cols: 100, readonly: true, onclick: 'this.select();' %>
+    </p>
+    <p class="sla-help"><%= l(:text_sla_embed_params) %></p>
+  </div>
+</fieldset>
 
 <% html_title l(:label_sla_dashboard) %>

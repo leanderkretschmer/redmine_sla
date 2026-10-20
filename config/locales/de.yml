@@ -66,6 +66,16 @@ de:
   button_sla_import: Eintragen
   notice_sla_holidays_imported: "%{count} bundesweite Feiertage für %{year} eingetragen (bereits vorhandene übersprungen)."
 
+  label_sla_embed: Einbetten
+  label_sla_embed_url: Einbett-Adresse (ohne Redmine-Rahmen)
+  label_sla_embed_html: HTML-Schnipsel (iframe)
+  label_sla_embed_updated: 'Stand: %{time}'
+  text_sla_embed_help: >-
+    Diese Adresse zeigt die Übersicht ohne Redmine-Menü und Suchleiste und kann in andere Panels eingebettet werden.
+    Der enthaltene Schlüssel ist dein persönlicher, nur lesender Feed-Schlüssel (wie bei Atom-Feeds); er kann unter
+    "Mein Konto" zurückgesetzt werden. Gezeigt werden die Projekte, die du sehen darfst.
+  text_sla_embed_params: 'Optionale Parameter: project_id=<Projektkennung> (nur ein Projekt), refresh=<Sekunden> (automatisch neu laden, mindestens 30).'
+
   notice_sla_rule_created: Sonderregel wurde erstellt.
   notice_sla_rule_updated: Sonderregel wurde aktualisiert.
   notice_sla_rule_deleted: Sonderregel wurde gelöscht.

@@ -65,6 +65,16 @@ en:
   button_sla_import: Add
   notice_sla_holidays_imported: "%{count} national holidays added for %{year} (existing ones skipped)."
 
+  label_sla_embed: Embed
+  label_sla_embed_url: Embed URL (without Redmine chrome)
+  label_sla_embed_html: HTML snippet (iframe)
+  label_sla_embed_updated: 'As of %{time}'
+  text_sla_embed_help: >-
+    This URL shows the overview without Redmine menu and search bar and can be embedded into other panels.
+    The key is your personal read-only feed key (as used for Atom feeds); it can be reset under "My account".
+    Only projects you are allowed to see are shown.
+  text_sla_embed_params: 'Optional parameters: project_id=<identifier> (single project), refresh=<seconds> (auto reload, minimum 30).'
+
   notice_sla_rule_created: Special rule has been created.
   notice_sla_rule_updated: Special rule has been updated.
   notice_sla_rule_deleted: Special rule has been deleted.

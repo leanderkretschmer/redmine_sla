@@ -19,6 +19,21 @@ module RedmineSla
       ActiveSupport::TimeZone['UTC']
   end
 
+  # Persönlicher, nur lesender Feed-Schlüssel (Redmine 6: atom_key, davor rss_key).
+  def self.feed_key_for(user)
+    user.respond_to?(:atom_key) ? user.atom_key : user.rss_key
+  end
+
+  def self.user_by_feed_key(key)
+    return nil if key.blank?
+
+    if User.respond_to?(:find_by_atom_key)
+      User.find_by_atom_key(key)
+    else
+      User.find_by_rss_key(key)
+    end
+  end
+
   def self.log(level, message)
     Rails.logger.public_send(level, "[redmine_sla] #{message}") if Rails.logger
   end

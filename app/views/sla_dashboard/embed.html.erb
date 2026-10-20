@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="<%= current_language %>">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= l(:label_sla_dashboard) %><%= " – #{h(@project.name)}" if @project %></title>
+  <% if @refresh.to_i.positive? %><meta http-equiv="refresh" content="<%= @refresh %>"><% end %>
+  <%= stylesheet_link_tag 'sla_dashboard', plugin: :redmine_sla %>
+  <style>
+    html, body { margin: 0; padding: 0; background: #fff; color: #333; font: 13px/1.4 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    body { padding: 10px 12px; }
+    a { color: #1565c0; text-decoration: none; } a:hover { text-decoration: underline; }
+    .sla-embed-header { display: flex; justify-content: space-between; align-items: baseline; gap: 1em; margin-bottom: 0.6em; }
+    .sla-embed-header h1 { font-size: 1.15em; margin: 0; }
+    .sla-embed-header .sla-stats { margin: 0; }
+    .sla-embed-footer { margin-top: 0.8em; color: #888; font-size: 0.85em; }
+    @media (prefers-color-scheme: dark) { html, body { background: #1e1e1e; color: #ddd; } a { color: #8ab4f8; } }
+  </style>
+</head>
+<body class="sla-embed-body">
+  <div class="sla-embed-header">
+    <h1><%= link_to (l(:label_sla_dashboard) + (@project ? " – #{h(@project.name)}" : '')).html_safe, sla_dashboard_url(project_id: @project&.identifier), target: '_top' %></h1>
+    <%= render partial: 'sla_dashboard/stats', locals: { board: @board } %>
+  </div>
+  <%= render partial: 'sla_dashboard/board', locals: { board: @board, embed: true } %>
+  <div class="sla-embed-footer"><%= l(:label_sla_embed_updated, time: format_time(Time.current)) %></div>
+</body>
+</html>

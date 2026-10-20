@@ -6,12 +6,12 @@
     <% board.columns.each do |project, deadlines| %>
       <div class="sla-column">
         <div class="sla-column-header">
-          <h4><%= link_to h(project.name), project_sla_path(project), title: project.identifier %></h4>
+          <h4><%= link_to h(project.name), project_sla_url(project), title: project.identifier, target: (local_assigns[:embed] ? '_top' : nil) %></h4>
           <span class="sla-count"><%= deadlines.size %></span>
         </div>
         <div class="sla-column-body">
           <% deadlines.each do |deadline| %>
-            <%= render partial: 'sla_dashboard/card', locals: { deadline: deadline } %>
+            <%= render partial: 'sla_dashboard/card', locals: { deadline: deadline, embed: local_assigns[:embed] } %>
           <% end %>
         </div>
       </div>
