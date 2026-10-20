@@ -1,10 +1,10 @@
 module RedmineSla
 end
 
-require_relative 'redmine_sla/models/sla_rule'
-require_relative 'redmine_sla/models/sla_deadline'
-require_relative 'redmine_sla/models/sla_setting'
-require_relative 'redmine_sla/models/sla_holiday'
+require_relative 'redmine_sla/sla_rule'
+require_relative 'redmine_sla/sla_deadline'
+require_relative 'redmine_sla/sla_setting'
+require_relative 'redmine_sla/sla_holiday'
 require_relative 'redmine_sla/sla_calendar'
 require_relative 'redmine_sla/hooks'
 
