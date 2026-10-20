@@ -5,9 +5,16 @@
 </p>
 
 <p>
-  <label for="settings_default_response_time_minutes"><%= l(:field_sla_response_time) %></label>
-  <%= number_field_tag 'settings[default_response_time_minutes]', settings['default_response_time_minutes'] || '240', min: 1, size: 6 %>
+  <label for="settings_default_initial_response_time_minutes"><%= l(:field_sla_initial_response_time) %></label>
+  <%= number_field_tag 'settings[default_initial_response_time_minutes]', settings['default_initial_response_time_minutes'] || '60', min: 1, size: 6 %>
   <%= l(:label_minutes) %>
+  <em class="info"><%= l(:text_sla_initial_response_time_info) %></em>
+</p>
+<p>
+  <label for="settings_default_response_time_minutes"><%= l(:field_sla_response_time) %></label>
+  <%= number_field_tag 'settings[default_response_time_minutes]', settings['default_response_time_minutes'] || '600', min: 1, size: 6 %>
+  <%= l(:label_minutes) %>
+  <em class="info"><%= l(:text_sla_response_time_info) %></em>
 </p>
 <p>
   <label for="settings_default_puffer_minutes"><%= l(:field_sla_puffer) %></label>

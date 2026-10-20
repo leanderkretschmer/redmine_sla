@@ -29,7 +29,7 @@ de:
   label_sla_due: Ablauf
   label_sla_oclock: Uhr
   label_resolution_time: Lösungszeit
-  label_response_time: Reaktionsfrist
+  label_response_time: Antwortzeit
   label_minutes: Minuten
   label_all_projects: Alle Projekte
   label_all_trackers: Alle Tracker
@@ -37,7 +37,10 @@ de:
   new_sla_rule: Neue Sonderregel
   edit_sla_rule: Sonderregel bearbeiten
 
-  field_sla_response_time: Reaktionsfrist
+  field_sla_initial_response_time: Reaktionszeit neues Ticket
+  field_sla_response_time: Antwortzeit auf Kommentare
+  label_sla_initial_short: Ticket
+  label_sla_comment_short: Kommentar
   field_sla_puffer: Puffer vor Feierabend
   field_sla_sod_hour: Arbeitsbeginn
   field_sla_eod_hour: Arbeitsende
@@ -76,6 +79,8 @@ de:
     "Mein Konto" zurückgesetzt werden. Gezeigt werden die Projekte, die du sehen darfst.
   text_sla_embed_params: 'Optionale Parameter: project_id=<Projektkennung> (nur ein Projekt), refresh=<Sekunden> (automatisch neu laden, mindestens 30).'
 
+  label_sla_resize_hint: Größe über die rechte untere Ecke ändern (wird im Browser gemerkt). Für volle Breite den Block in den oberen Bereich ziehen.
+
   notice_sla_rule_created: Sonderregel wurde erstellt.
   notice_sla_rule_updated: Sonderregel wurde aktualisiert.
   notice_sla_rule_deleted: Sonderregel wurde gelöscht.
@@ -88,9 +93,11 @@ de:
   text_sla_holidays_help: >-
     Feiertage zählen nicht als Arbeitszeit. Ohne Projekt gilt der Feiertag für alle Projekte.
   text_sla_rules_help: >-
-    Sonderregeln überschreiben die Reaktionsfrist eines Projekt-SLAs für bestimmte Tracker.
+    Sonderregeln überschreiben die Fristen eines Projekt-SLAs für bestimmte Tracker (Reaktionszeit neues Ticket und/oder Antwortzeit auf Kommentare).
     Bei mehreren passenden Regeln gewinnt die höchste Priorität.
-  text_sla_response_time_info: Arbeitsminuten innerhalb der Geschäftszeiten bis zur ersten Antwort.
+  text_sla_initial_response_time_info: Arbeitsminuten innerhalb der Geschäftszeiten, bis ein neu eingegangenes Ticket (z. B. aus dem Helpdesk) eine erste Antwort braucht.
+  text_sla_response_time_info: Arbeitsminuten innerhalb der Geschäftszeiten, bis ein Kommentar eines Externen auf einem bestehenden Ticket beantwortet sein muss.
+  text_sla_rule_times_info: Leer lassen, um den Wert des Projekt-SLAs zu übernehmen; mindestens eine der beiden Fristen angeben.
   text_sla_puffer_info: Die interne Frist liegt spätestens so viele Minuten vor Arbeitsende des Fristtags.
   text_sla_time_zone_info: 'Zeitzone: %{zone} (änderbar in den Plugin-Einstellungen).'
   text_sla_time_zone_setting_info: Zeitzone, in der Arbeitsbeginn und -ende interpretiert werden.

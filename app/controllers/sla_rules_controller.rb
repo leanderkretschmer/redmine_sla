@@ -51,7 +51,7 @@ class SlaRulesController < ApplicationController
   def sla_rule_params
     params.require(:sla_rule).permit(
       :name, :project_id, :tracker_id,
-      :priority, :resolution_time_minutes, :response_time_minutes, :description
+      :priority, :resolution_time_minutes, :initial_response_time_minutes, :response_time_minutes, :description
     )
   end
 end

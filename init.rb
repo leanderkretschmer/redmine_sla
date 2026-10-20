@@ -19,7 +19,8 @@ Redmine::Plugin.register :redmine_sla do
   requires_redmine version_or_higher: '6.0.0'
 
   settings default: {
-    'default_response_time_minutes' => '240',
+    'default_initial_response_time_minutes' => '60',
+    'default_response_time_minutes' => '600',
     'default_puffer_minutes' => '120',
     'default_sod_hour' => '7',
     'default_eod_hour' => '18',

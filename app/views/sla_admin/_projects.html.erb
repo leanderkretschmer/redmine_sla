@@ -17,6 +17,7 @@
     <thead>
       <tr>
         <th><%= l(:field_project) %></th>
+        <th><%= l(:field_sla_initial_response_time) %></th>
         <th><%= l(:field_sla_response_time) %></th>
         <th><%= l(:field_sla_puffer) %></th>
         <th><%= l(:field_sla_business_hours) %></th>
@@ -30,6 +31,7 @@
         <% light = @lights[s.project_id] %>
         <tr class="<%= cycle('odd', 'even') %>">
           <td class="name"><%= link_to h(s.project.name), project_sla_path(s.project) %></td>
+          <td><%= s.initial_response_time_minutes %> <%= l(:label_minutes) %> <span class="sla-muted">(<%= s.initial_response_time_hours %> h)</span></td>
           <td><%= s.response_time_minutes %> <%= l(:label_minutes) %> <span class="sla-muted">(<%= s.response_time_hours %> h)</span></td>
           <td><%= s.puffer_minutes_before_eod %> <%= l(:label_minutes) %></td>
           <td><%= '%02d:00' % s.sod_hour %> – <%= '%02d:00' % s.eod_hour %></td>

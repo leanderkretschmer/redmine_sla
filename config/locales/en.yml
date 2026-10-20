@@ -37,7 +37,10 @@ en:
   new_sla_rule: New special rule
   edit_sla_rule: Edit special rule
 
-  field_sla_response_time: Response time
+  field_sla_initial_response_time: Initial response time (new ticket)
+  field_sla_response_time: Response time for comments
+  label_sla_initial_short: Ticket
+  label_sla_comment_short: Comment
   field_sla_puffer: Buffer before end of day
   field_sla_sod_hour: Start of business
   field_sla_eod_hour: End of business
@@ -75,6 +78,8 @@ en:
     Only projects you are allowed to see are shown.
   text_sla_embed_params: 'Optional parameters: project_id=<identifier> (single project), refresh=<seconds> (auto reload, minimum 30).'
 
+  label_sla_resize_hint: Drag the bottom-right corner to resize (remembered in this browser). Drag the block to the top area for full width.
+
   notice_sla_rule_created: Special rule has been created.
   notice_sla_rule_updated: Special rule has been updated.
   notice_sla_rule_deleted: Special rule has been deleted.
@@ -85,9 +90,11 @@ en:
     via web, e-mail or the TYPO3 integration. A public reply by an employee or closing the ticket clears the deadline.
   text_sla_holidays_help: Holidays do not count as business time. Without a project the holiday applies to all projects.
   text_sla_rules_help: >-
-    Special rules override a project SLA's response time for specific trackers.
+    Special rules override a project SLA's times for specific trackers (initial response and/or comment response time).
     If several rules match, the highest priority wins.
-  text_sla_response_time_info: Business minutes within business hours until the first reply.
+  text_sla_initial_response_time_info: Business minutes within business hours until a newly created ticket (e.g. from the helpdesk) needs a first reply.
+  text_sla_response_time_info: Business minutes within business hours until an external comment on an existing ticket must be answered.
+  text_sla_rule_times_info: Leave empty to use the project SLA value; at least one of the two times is required.
   text_sla_puffer_info: The internal deadline is at the latest this many minutes before end of business on the due day.
   text_sla_time_zone_info: 'Time zone: %{zone} (configurable in the plugin settings).'
   text_sla_time_zone_setting_info: Time zone used to interpret start and end of business.

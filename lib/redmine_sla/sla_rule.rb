@@ -1,5 +1,6 @@
-# Optionale Sonderregel: abweichende Reaktionsfrist für Projekt und/oder Tracker.
-# Ohne passende Regel gilt die Reaktionsfrist aus den Projekt-SLA-Einstellungen.
+# Optionale Sonderregel: abweichende Fristen für Projekt und/oder Tracker
+# (Reaktionszeit neues Ticket und/oder Antwortzeit auf Kommentare).
+# Ohne passende Regel gelten die Fristen aus den Projekt-SLA-Einstellungen.
 class RedmineSla::SlaRule < ActiveRecord::Base
   self.table_name = 'sla_rules'
 
@@ -9,18 +10,20 @@ class RedmineSla::SlaRule < ActiveRecord::Base
 
   validates :name, presence: true, length: { maximum: 255 }
   validates :priority, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-  validates :response_time_minutes, numericality: { only_integer: true, greater_than: 0 }
+  validates :initial_response_time_minutes, numericality: { only_integer: true, greater_than: 0, allow_nil: true }
+  validates :response_time_minutes, numericality: { only_integer: true, greater_than: 0, allow_nil: true }
+  validate :at_least_one_time
   validates :resolution_time_minutes, numericality: { only_integer: true, greater_than: 0, allow_nil: true }
 
   scope :sorted_by_priority, -> { order(priority: :desc, id: :asc) }
 
   after_commit :rebuild_deadlines
 
-  def self.response_time_for(project, tracker)
+  def self.response_time_for(project, tracker, kind = :comment)
     return nil unless project
 
-    rule = matching(project, tracker).first
-    rule&.response_time_minutes
+    column = kind.to_sym == :initial ? :initial_response_time_minutes : :response_time_minutes
+    matching(project, tracker).where.not(column => nil).first&.public_send(column)
   end
 
   def self.matching(project, tracker)
@@ -35,6 +38,12 @@ class RedmineSla::SlaRule < ActiveRecord::Base
   end
 
   private
+
+  def at_least_one_time
+    if initial_response_time_minutes.blank? && response_time_minutes.blank?
+      errors.add(:response_time_minutes, :blank)
+    end
+  end
 
   def rebuild_deadlines
     if project

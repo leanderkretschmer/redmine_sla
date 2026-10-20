@@ -49,7 +49,7 @@ class SlaProjectSettingsController < ApplicationController
 
   def setting_params
     params.require(:sla_setting).permit(
-      :project_id, :response_time_minutes, :puffer_minutes_before_eod,
+      :project_id, :initial_response_time_minutes, :response_time_minutes, :puffer_minutes_before_eod,
       :sod_hour, :eod_hour, :exclude_weekends, :exclude_holidays
     )
   end

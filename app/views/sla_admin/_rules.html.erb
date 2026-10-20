@@ -12,6 +12,7 @@
         <th><%= l(:label_sla_rule) %></th>
         <th><%= l(:field_project) %></th>
         <th><%= l(:field_tracker) %></th>
+        <th><%= l(:field_sla_initial_response_time) %></th>
         <th><%= l(:field_sla_response_time) %></th>
         <th><%= l(:label_resolution_time) %></th>
         <th><%= l(:field_priority) %></th>
@@ -25,7 +26,8 @@
             <% if rule.description.present? %><br><span class="sla-muted"><%= h(rule.description) %></span><% end %></td>
           <td><%= rule.project ? h(rule.project.name) : l(:label_all_projects) %></td>
           <td><%= rule.tracker ? h(rule.tracker.name) : l(:label_all_trackers) %></td>
-          <td><%= rule.response_time_minutes %> <%= l(:label_minutes) %> <span class="sla-muted">(<%= (rule.response_time_minutes / 60.0).round(1) %> h)</span></td>
+          <td><%= rule.initial_response_time_minutes ? "#{rule.initial_response_time_minutes} #{l(:label_minutes)}" : '–' %></td>
+          <td><%= rule.response_time_minutes ? "#{rule.response_time_minutes} #{l(:label_minutes)}" : '–' %></td>
           <td><%= rule.resolution_time_minutes ? "#{rule.resolution_time_minutes} #{l(:label_minutes)}" : '–' %></td>
           <td><%= rule.priority %></td>
           <td class="buttons">

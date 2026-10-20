@@ -12,6 +12,11 @@
     <% end %>
   </p>
   <p>
+    <%= f.label :initial_response_time_minutes, l(:field_sla_initial_response_time) %><span class="required"> *</span>
+    <%= f.number_field :initial_response_time_minutes, min: 1, step: 1, size: 6 %> <%= l(:label_minutes) %>
+    <em class="info"><%= l(:text_sla_initial_response_time_info) %></em>
+  </p>
+  <p>
     <%= f.label :response_time_minutes, l(:field_sla_response_time) %><span class="required"> *</span>
     <%= f.number_field :response_time_minutes, min: 1, step: 1, size: 6 %> <%= l(:label_minutes) %>
     <em class="info"><%= l(:text_sla_response_time_info) %></em>

@@ -7,10 +7,11 @@ class RedmineSla::SlaSetting < ActiveRecord::Base
 
   belongs_to :project, class_name: 'Project'
 
-  safe_attributes 'response_time_minutes', 'puffer_minutes_before_eod',
+  safe_attributes 'initial_response_time_minutes', 'response_time_minutes', 'puffer_minutes_before_eod',
                   'sod_hour', 'eod_hour', 'exclude_weekends', 'exclude_holidays'
 
   validates :project_id, presence: true, uniqueness: true
+  validates :initial_response_time_minutes, numericality: { only_integer: true, greater_than: 0 }
   validates :response_time_minutes, numericality: { only_integer: true, greater_than: 0 }
   validates :puffer_minutes_before_eod, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :sod_hour, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 23 }
@@ -37,7 +38,8 @@ class RedmineSla::SlaSetting < ActiveRecord::Base
   # Vorbelegung neuer Projekt-SLAs aus den globalen Plugin-Einstellungen.
   def self.defaults
     {
-      response_time_minutes: RedmineSla.setting(:default_response_time_minutes, 240).to_i,
+      initial_response_time_minutes: RedmineSla.setting(:default_initial_response_time_minutes, 60).to_i,
+      response_time_minutes: RedmineSla.setting(:default_response_time_minutes, 600).to_i,
       puffer_minutes_before_eod: RedmineSla.setting(:default_puffer_minutes, 120).to_i,
       sod_hour: RedmineSla.setting(:default_sod_hour, 7).to_i,
       eod_hour: RedmineSla.setting(:default_eod_hour, 18).to_i,
@@ -60,9 +62,18 @@ class RedmineSla::SlaSetting < ActiveRecord::Base
     )
   end
 
-  # Reaktionsfrist in Minuten für ein Ticket: SLA-Regel (Projekt/Tracker) vor Projektstandard.
-  def response_time_for(issue)
-    RedmineSla::SlaRule.response_time_for(project, issue.tracker) || response_time_minutes
+  # Frist in Minuten für ein Ticket: Sonderregel (Projekt/Tracker) vor Projektstandard.
+  # kind: :initial (neues Ticket) oder :comment (Kommentar auf bestehendem Ticket)
+  def response_time_for(issue, kind = :comment)
+    RedmineSla::SlaRule.response_time_for(project, issue.tracker, kind) || default_response_time(kind)
+  end
+
+  def default_response_time(kind)
+    kind.to_sym == :initial ? initial_response_time_minutes : response_time_minutes
+  end
+
+  def initial_response_time_hours
+    (initial_response_time_minutes.to_f / 60).round(1)
   end
 
   def response_time_hours

@@ -76,9 +76,11 @@ module RedmineSla
       def open_deadline!(issue, setting, journal:, time:)
         return if SlaDeadline.pending.for_issue(issue).exists?
 
-        response_minutes = setting.response_time_for(issue)
+        kind = journal ? :comment : :initial
+        response_minutes = setting.response_time_for(issue, kind)
         times = setting.calendar.deadlines_for(time, response_minutes)
-        rule = SlaRule.matching(issue.project, issue.tracker).first
+        column = kind == :initial ? :initial_response_time_minutes : :response_time_minutes
+        rule = SlaRule.matching(issue.project, issue.tracker).where.not(column => nil).first
 
         SlaDeadline.create!(
           issue_id: issue.id,

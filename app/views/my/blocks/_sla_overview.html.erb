@@ -6,4 +6,26 @@
     <span class="badge badge-count sla-badge sla-badge-<%= board.stats[:breached] > 0 ? 'red' : (board.stats[:at_risk] > 0 ? 'yellow' : 'green') %>"><%= board.size %></span>
   <% end %>
 </h3>
-<%= render partial: 'sla_dashboard/board', locals: { board: board, compact: true } %>
+<div class="sla-block-resizable" id="sla-block-resizable" title="<%= l(:label_sla_resize_hint) %>">
+  <%= render partial: 'sla_dashboard/board', locals: { board: board, compact: true } %>
+</div>
+<%= javascript_tag do %>
+(function () {
+  var box = document.getElementById('sla-block-resizable');
+  if (!box) return;
+  var key = 'redmine_sla_block_size';
+  try {
+    var saved = JSON.parse(localStorage.getItem(key) || 'null');
+    if (saved && saved.h) box.style.height = saved.h + 'px';
+    if (saved && saved.w) box.style.width = saved.w + 'px';
+  } catch (e) {}
+  if (typeof ResizeObserver === 'undefined') return;
+  var timer = null;
+  new ResizeObserver(function () {
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      try { localStorage.setItem(key, JSON.stringify({ h: box.offsetHeight, w: box.offsetWidth })); } catch (e) {}
+    }, 300);
+  }).observe(box);
+})();
+<% end %>

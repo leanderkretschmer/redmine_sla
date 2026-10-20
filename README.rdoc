@@ -12,8 +12,9 @@ Ohne HR-Plugin gelten alle aktiven, nicht gesperrten Benutzerkonten als intern.
 
 == Funktionen
 
-- Administration → *SLA*: SLAs pro Projekt (Reaktionsfrist, Puffer vor Feierabend, Geschäftszeiten,
-  Wochenenden/Feiertage), Feiertage (global oder je Projekt) und Sonderregeln je Tracker.
+- Administration → *SLA*: SLAs pro Projekt mit zwei Fristen – *Reaktionszeit neues Ticket* (Standard 60 Minuten,
+  z. B. Helpdesk-Eingang) und *Antwortzeit auf Kommentare* (Standard 600 Minuten = 10 h) –, Puffer vor Feierabend,
+  Geschäftszeiten, Wochenenden/Feiertage; Feiertage (global oder je Projekt) und Sonderregeln je Tracker.
 - Nur Projekte mit Projekt-SLA erhalten den Projekt-Reiter *SLA* und Antwortfristen.
 - "Meine Seite"-Block *SLA – Zu beantworten* (wird beim ersten Aufruf automatisch unterhalb von
   "Beobachtete Tickets" eingeblendet, höhenbegrenzt mit Scrollen, wie jeder Block entfernbar):
