@@ -15,7 +15,8 @@ Ohne HR-Plugin gelten alle aktiven, nicht gesperrten Benutzerkonten als intern.
 - Administration → *SLA*: SLAs pro Projekt (Reaktionsfrist, Puffer vor Feierabend, Geschäftszeiten,
   Wochenenden/Feiertage), Feiertage (global oder je Projekt) und Sonderregeln je Tracker.
 - Nur Projekte mit Projekt-SLA erhalten den Projekt-Reiter *SLA* und Antwortfristen.
-- "Meine Seite"-Block *SLA – Zu beantworten*: pro Projekt eine Spalte, pro Ticket eine Ampelkarte
+- "Meine Seite"-Block *SLA – Zu beantworten* (wird beim ersten Aufruf automatisch oben eingeblendet,
+  lässt sich wie jeder Block entfernen): pro Projekt eine Spalte, pro Ticket eine Ampelkarte
   (Ticket, Kommentar von / Ticket von, Zeitpunkt, Ablauf).
   Rot = überfällig, Gelb = heute fällig, Grün = im Zeitrahmen.
 - Gesamtübersicht unter +/sla/dashboard+.

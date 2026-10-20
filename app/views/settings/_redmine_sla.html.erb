@@ -27,7 +27,7 @@
 <p>
   <label for="settings_time_zone"><%= l(:field_sla_time_zone) %></label>
   <%= select_tag 'settings[time_zone]',
-                 options_for_select(ActiveSupport::TimeZone.all.map { |z| [z.to_s, z.name] }, settings['time_zone'] || 'Europe/Berlin') %>
+                 options_for_select(ActiveSupport::TimeZone.all.map { |z| [z.to_s, z.tzinfo.name] }.uniq { |_, v| v }.sort_by(&:first), (ActiveSupport::TimeZone[settings['time_zone'].to_s]&.tzinfo&.name || 'Europe/Berlin')) %>
   <em class="info"><%= l(:text_sla_time_zone_setting_info) %></em>
 </p>
 

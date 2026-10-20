@@ -55,6 +55,17 @@ de:
     alle anderen Beiträge (E-Mail-Absender, TYPO3, API-Nutzer) lösen eine aus. Ist das HR-Plugin nicht installiert,
     gelten alle aktiven Benutzerkonten als intern.
 
+  label_sla_plugin_settings: Plugin-Einstellungen
+  label_sla_kpi_projects: Projekte mit SLA
+  label_sla_days_off: Arbeitsfrei
+  label_sla_weekends: Wochenenden
+  label_sla_no_project_settings: Noch kein Projekt mit SLA. Oben ein Projekt auswählen und hinzufügen.
+  label_sla_no_holidays: Keine Feiertage eingetragen.
+  label_sla_holiday_placeholder: z. B. Rosenmontag
+  label_sla_import_national: Bundesweite Feiertage eintragen für
+  button_sla_import: Eintragen
+  notice_sla_holidays_imported: "%{count} bundesweite Feiertage für %{year} eingetragen (bereits vorhandene übersprungen)."
+
   notice_sla_rule_created: Sonderregel wurde erstellt.
   notice_sla_rule_updated: Sonderregel wurde aktualisiert.
   notice_sla_rule_deleted: Sonderregel wurde gelöscht.

@@ -1,24 +1,32 @@
-<p class="sla-help"><%= l(:text_sla_holidays_help) %></p>
+<div class="sla-tab-intro">
+  <p><%= l(:text_sla_holidays_help) %></p>
+</div>
 
-<%= form_for @holiday, as: :sla_holiday, url: sla_holidays_path, html: { class: 'tabular sla-inline-form' } do |f| %>
-  <fieldset class="box">
-    <legend><%= l(:label_sla_add_holiday) %></legend>
-    <p><%= f.text_field :name, size: 40, required: true, label: :field_name %></p>
-    <p><%= f.date_field :date, required: true, label: :field_date %></p>
-    <p><%= f.select :project_id,
-                     options_for_select([[l(:label_all_projects), '']] + Project.active.sorted.map { |p| [p.name, p.id] }),
-                     label: :field_project %></p>
-    <p><%= f.submit l(:button_add), name: nil %></p>
-  </fieldset>
-<% end %>
+<div class="sla-forms-row">
+  <%= form_for @holiday, as: :sla_holiday, url: sla_holidays_path, html: { class: 'sla-inline-form' } do |f| %>
+    <label for="sla_holiday_name"><%= l(:field_name) %></label>
+    <%= f.text_field :name, size: 28, required: true, placeholder: l(:label_sla_holiday_placeholder) %>
+    <label for="sla_holiday_date"><%= l(:label_date) %></label>
+    <%= f.date_field :date, required: true %>
+    <label for="sla_holiday_project_id"><%= l(:field_project) %></label>
+    <%= f.select :project_id, options_for_select([[l(:label_all_projects), '']] + Project.active.sorted.map { |p| [p.name, p.id] }) %>
+    <%= f.submit l(:button_add), name: nil %>
+  <% end %>
+
+  <%= form_tag import_sla_holidays_path, method: :post, class: 'sla-inline-form' do %>
+    <label for="sla_import_year"><%= l(:label_sla_import_national) %></label>
+    <%= select_tag :year, options_for_select((Date.current.year - 1..Date.current.year + 2).to_a, @import_year), id: 'sla_import_year' %>
+    <%= submit_tag l(:button_sla_import), name: nil %>
+  <% end %>
+</div>
 
 <% if @holidays.empty? %>
-  <p class="nodata"><%= l(:label_no_data) %></p>
+  <p class="nodata"><%= l(:label_sla_no_holidays) %></p>
 <% else %>
-  <table class="list">
+  <table class="list sla-holidays-list">
     <thead>
       <tr>
-        <th><%= l(:field_date) %></th>
+        <th><%= l(:label_date) %></th>
         <th><%= l(:field_name) %></th>
         <th><%= l(:field_project) %></th>
         <th></th>
@@ -26,10 +34,10 @@
     </thead>
     <tbody>
       <% @holidays.each do |hd| %>
-        <tr class="<%= cycle('odd', 'even') %>">
-          <td><%= format_date(hd.date) %></td>
+        <tr class="<%= cycle('odd', 'even') %> <%= 'sla-past' if hd.date < Date.current %>">
+          <td><%= format_date(hd.date) %> <span class="sla-muted"><%= day_name(hd.date.wday) %></span></td>
           <td><%= h(hd.name) %></td>
-          <td><%= hd.project ? h(hd.project.name) : l(:label_all_projects) %></td>
+          <td><%= hd.project ? link_to(h(hd.project.name), project_sla_path(hd.project)) : l(:label_all_projects) %></td>
           <td class="buttons">
             <%= link_to l(:button_delete), sla_holiday_path(hd), method: :delete,
                         data: { confirm: l(:text_are_you_sure) }, class: 'icon icon-del' %>

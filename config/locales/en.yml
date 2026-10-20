@@ -54,6 +54,17 @@ en:
     time or absence entries present). Only posts by internal users clear a response deadline; all other posts
     (e-mail senders, TYPO3, API users) create one. Without the HR plugin all active accounts count as internal.
 
+  label_sla_plugin_settings: Plugin settings
+  label_sla_kpi_projects: Projects with SLA
+  label_sla_days_off: Days off
+  label_sla_weekends: Weekends
+  label_sla_no_project_settings: No project with SLA yet. Select a project above and add it.
+  label_sla_no_holidays: No holidays defined.
+  label_sla_holiday_placeholder: e.g. Company holiday
+  label_sla_import_national: Add German national holidays for
+  button_sla_import: Add
+  notice_sla_holidays_imported: "%{count} national holidays added for %{year} (existing ones skipped)."
+
   notice_sla_rule_created: Special rule has been created.
   notice_sla_rule_updated: Special rule has been updated.
   notice_sla_rule_deleted: Special rule has been deleted.

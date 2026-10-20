@@ -1,8 +1,7 @@
-<div class="contextual">
-  <%= link_to l(:new_sla_rule), new_sla_rule_path, class: 'icon icon-add' %>
+<div class="sla-tab-intro">
+  <p><%= l(:text_sla_rules_help) %></p>
+  <p><%= link_to l(:new_sla_rule), new_sla_rule_path, class: 'icon icon-add' %></p>
 </div>
-
-<p class="sla-help"><%= l(:text_sla_rules_help) %></p>
 
 <% if @rules.empty? %>
   <p class="nodata"><%= l(:label_no_sla_rules) %></p>
@@ -22,11 +21,12 @@
     <tbody>
       <% @rules.each do |rule| %>
         <tr class="<%= cycle('odd', 'even') %>">
-          <td><%= link_to h(rule.name), edit_sla_rule_path(rule) %></td>
+          <td class="name"><%= link_to h(rule.name), edit_sla_rule_path(rule) %>
+            <% if rule.description.present? %><br><span class="sla-muted"><%= h(rule.description) %></span><% end %></td>
           <td><%= rule.project ? h(rule.project.name) : l(:label_all_projects) %></td>
           <td><%= rule.tracker ? h(rule.tracker.name) : l(:label_all_trackers) %></td>
-          <td><%= rule.response_time_minutes %> <%= l(:label_minutes) %></td>
-          <td><%= rule.resolution_time_minutes ? "#{rule.resolution_time_minutes} #{l(:label_minutes)}" : '-' %></td>
+          <td><%= rule.response_time_minutes %> <%= l(:label_minutes) %> <span class="sla-muted">(<%= (rule.response_time_minutes / 60.0).round(1) %> h)</span></td>
+          <td><%= rule.resolution_time_minutes ? "#{rule.resolution_time_minutes} #{l(:label_minutes)}" : '–' %></td>
           <td><%= rule.priority %></td>
           <td class="buttons">
             <%= link_to l(:button_edit), edit_sla_rule_path(rule), class: 'icon icon-edit' %>

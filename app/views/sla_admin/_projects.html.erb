@@ -1,11 +1,17 @@
-<div class="contextual">
-  <%= link_to l(:label_sla_add_project), new_sla_project_setting_path, class: 'icon icon-add' %>
+<div class="sla-tab-intro">
+  <p><%= l(:text_sla_projects_help) %></p>
 </div>
 
-<p class="sla-help"><%= l(:text_sla_projects_help) %></p>
+<% if @projects_without_sla.any? %>
+  <%= form_tag new_sla_project_setting_path, method: :get, class: 'sla-inline-form' do %>
+    <label for="sla_new_project_id"><%= l(:label_sla_add_project) %>:</label>
+    <%= select_tag :project_id, options_for_select(@projects_without_sla.map { |p| [p.name, p.id] }), id: 'sla_new_project_id', include_blank: true, required: true %>
+    <%= submit_tag l(:button_add), name: nil %>
+  <% end %>
+<% end %>
 
 <% if @settings.empty? %>
-  <p class="nodata"><%= l(:label_no_data) %></p>
+  <p class="nodata"><%= l(:label_sla_no_project_settings) %></p>
 <% else %>
   <table class="list sla-settings-list">
     <thead>
@@ -14,25 +20,32 @@
         <th><%= l(:field_sla_response_time) %></th>
         <th><%= l(:field_sla_puffer) %></th>
         <th><%= l(:field_sla_business_hours) %></th>
-        <th><%= l(:field_sla_exclude_weekends) %></th>
-        <th><%= l(:field_sla_exclude_holidays) %></th>
+        <th><%= l(:label_sla_days_off) %></th>
         <th><%= l(:label_sla_open_responses) %></th>
         <th></th>
       </tr>
     </thead>
     <tbody>
       <% @settings.each do |s| %>
+        <% light = @lights[s.project_id] %>
         <tr class="<%= cycle('odd', 'even') %>">
-          <td><%= link_to h(s.project.name), project_sla_path(s.project) %></td>
-          <td><%= s.response_time_minutes %> <%= l(:label_minutes) %></td>
+          <td class="name"><%= link_to h(s.project.name), project_sla_path(s.project) %></td>
+          <td><%= s.response_time_minutes %> <%= l(:label_minutes) %> <span class="sla-muted">(<%= s.response_time_hours %> h)</span></td>
           <td><%= s.puffer_minutes_before_eod %> <%= l(:label_minutes) %></td>
           <td><%= '%02d:00' % s.sod_hour %> – <%= '%02d:00' % s.eod_hour %></td>
-          <td><%= checked_image s.exclude_weekends %></td>
-          <td><%= checked_image s.exclude_holidays %></td>
           <td>
-            <%= @pending_counts[s.project_id].to_i %>
-            <% if @breached_counts[s.project_id].to_i > 0 %>
-              <span class="sla-badge sla-badge-red"><%= @breached_counts[s.project_id] %> <%= l(:label_sla_breached) %></span>
+            <% parts = [] %>
+            <% parts << l(:label_sla_weekends) if s.exclude_weekends %>
+            <% parts << l(:label_sla_holidays) if s.exclude_holidays %>
+            <%= parts.any? ? parts.join(', ') : '–' %>
+          </td>
+          <td class="sla-lights">
+            <% if light.values.sum.zero? %>
+              <span class="sla-muted">–</span>
+            <% else %>
+              <span class="sla-light sla-light-red" title="<%= l(:label_sla_breached) %>"><%= light[:red] %></span>
+              <span class="sla-light sla-light-yellow" title="<%= l(:label_sla_at_risk) %>"><%= light[:yellow] %></span>
+              <span class="sla-light sla-light-green" title="<%= l(:label_sla_ok) %>"><%= light[:green] %></span>
             <% end %>
           </td>
           <td class="buttons">
@@ -44,11 +57,4 @@
       <% end %>
     </tbody>
   </table>
-<% end %>
-
-<% if @projects_without_sla.any? %>
-  <p class="sla-help">
-    <%= l(:label_sla_projects_without) %>:
-    <%= @projects_without_sla.map { |p| link_to(h(p.name), new_sla_project_setting_path(project_id: p.id)) }.join(', ').html_safe %>
-  </p>
 <% end %>

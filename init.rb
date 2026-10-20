@@ -6,6 +6,7 @@ require 'redmine'
 RedmineSla::Hooks # Hook-Listener laden (registriert sich beim Laden der Klasse)
 Journal.include(RedmineSla::JournalPatch) unless Journal.include?(RedmineSla::JournalPatch)
 Issue.include(RedmineSla::IssuePatch) unless Issue.include?(RedmineSla::IssuePatch)
+MyController.prepend(RedmineSla::MyControllerPatch) unless MyController.include?(RedmineSla::MyControllerPatch)
 
 Redmine::Plugin.register :redmine_sla do
   name 'Redmine SLA Plugin'

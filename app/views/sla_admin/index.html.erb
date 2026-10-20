@@ -1,4 +1,28 @@
+<div class="contextual">
+  <%= link_to l(:label_sla_dashboard), sla_dashboard_path, class: 'icon icon-stats' %>
+  <%= link_to l(:label_sla_plugin_settings), { controller: 'settings', action: 'plugin', id: 'redmine_sla' }, class: 'icon icon-settings' %>
+</div>
+
 <h2><%= l(:label_sla_admin) %></h2>
+
+<div class="sla-kpis">
+  <div class="sla-kpi">
+    <span class="sla-kpi-number"><%= @settings.size %></span>
+    <span class="sla-kpi-label"><%= l(:label_sla_kpi_projects) %></span>
+  </div>
+  <div class="sla-kpi sla-kpi-red">
+    <span class="sla-kpi-number"><%= @totals[:red] %></span>
+    <span class="sla-kpi-label"><%= l(:label_sla_breached) %></span>
+  </div>
+  <div class="sla-kpi sla-kpi-yellow">
+    <span class="sla-kpi-number"><%= @totals[:yellow] %></span>
+    <span class="sla-kpi-label"><%= l(:label_sla_at_risk) %></span>
+  </div>
+  <div class="sla-kpi sla-kpi-green">
+    <span class="sla-kpi-number"><%= @totals[:green] %></span>
+    <span class="sla-kpi-label"><%= l(:label_sla_ok) %></span>
+  </div>
+</div>
 
 <% tabs = [
      { name: 'projects', partial: 'sla_admin/projects', label: :label_sla_project_settings },
