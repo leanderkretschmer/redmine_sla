@@ -1,0 +1,31 @@
+<h2><%= l(:label_sla) %></h2>
+
+<div class="box sla-project-settings">
+  <h3><%= l(:label_sla_project_settings) %></h3>
+  <ul>
+    <li><strong><%= l(:field_sla_response_time) %>:</strong> <%= @setting.response_time_minutes %> <%= l(:label_minutes) %> (<%= @setting.response_time_hours %> h)</li>
+    <li><strong><%= l(:field_sla_puffer) %>:</strong> <%= @setting.puffer_minutes_before_eod %> <%= l(:label_minutes) %></li>
+    <li><strong><%= l(:field_sla_business_hours) %>:</strong> <%= '%02d:00' % @setting.sod_hour %> – <%= '%02d:00' % @setting.eod_hour %> (<%= RedmineSla.time_zone.name %>)</li>
+    <li><strong><%= l(:field_sla_exclude_weekends) %>:</strong> <%= l(@setting.exclude_weekends ? :general_text_Yes : :general_text_No) %></li>
+    <li><strong><%= l(:field_sla_exclude_holidays) %>:</strong> <%= l(@setting.exclude_holidays ? :general_text_Yes : :general_text_No) %></li>
+    <% if @rules.any? %>
+      <li><strong><%= l(:label_sla_rules) %>:</strong>
+        <%= @rules.map { |r| "#{h(r.name)} (#{r.tracker ? h(r.tracker.name) : l(:label_all_trackers)}: #{r.response_time_minutes} #{l(:label_minutes)})" }.join(', ').html_safe %>
+      </li>
+    <% end %>
+    <% if @holidays.any? %>
+      <li><strong><%= l(:label_sla_upcoming_holidays) %>:</strong>
+        <%= @holidays.map { |hd| "#{format_date(hd.date)} #{h(hd.name)}" }.join(', ').html_safe %>
+      </li>
+    <% end %>
+  </ul>
+  <% if User.current.admin? %>
+    <p><%= link_to l(:button_edit), edit_sla_project_setting_path(@setting), class: 'icon icon-edit' %></p>
+  <% end %>
+</div>
+
+<h3><%= l(:label_sla_open_responses) %></h3>
+<%= render partial: 'sla_dashboard/stats', locals: { board: @board } %>
+<%= render partial: 'sla_dashboard/board', locals: { board: @board } %>
+
+<% html_title l(:label_sla) %>

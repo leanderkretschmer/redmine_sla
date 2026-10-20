@@ -1,0 +1,41 @@
+<%= error_messages_for @setting %>
+
+<div class="box tabular">
+  <p>
+    <%= f.label :project_id, l(:field_project) %><span class="required"> *</span>
+    <% if @setting.new_record? %>
+      <%= f.select :project_id,
+                   options_for_select(Project.active.sorted.map { |p| [p.name, p.id] }, @setting.project_id),
+                   include_blank: true, required: true %>
+    <% else %>
+      <strong><%= h(@setting.project.name) %></strong>
+    <% end %>
+  </p>
+  <p>
+    <%= f.label :response_time_minutes, l(:field_sla_response_time) %><span class="required"> *</span>
+    <%= f.number_field :response_time_minutes, min: 1, step: 1, size: 6 %> <%= l(:label_minutes) %>
+    <em class="info"><%= l(:text_sla_response_time_info) %></em>
+  </p>
+  <p>
+    <%= f.label :puffer_minutes_before_eod, l(:field_sla_puffer) %>
+    <%= f.number_field :puffer_minutes_before_eod, min: 0, step: 1, size: 6 %> <%= l(:label_minutes) %>
+    <em class="info"><%= l(:text_sla_puffer_info) %></em>
+  </p>
+  <p>
+    <%= f.label :sod_hour, l(:field_sla_sod_hour) %>
+    <%= f.number_field :sod_hour, min: 0, max: 23, step: 1, size: 3 %> <%= l(:label_sla_oclock) %>
+  </p>
+  <p>
+    <%= f.label :eod_hour, l(:field_sla_eod_hour) %>
+    <%= f.number_field :eod_hour, min: 1, max: 24, step: 1, size: 3 %> <%= l(:label_sla_oclock) %>
+    <em class="info"><%= l(:text_sla_time_zone_info, zone: RedmineSla.time_zone.name) %></em>
+  </p>
+  <p>
+    <%= f.label :exclude_weekends, l(:field_sla_exclude_weekends) %>
+    <%= f.check_box :exclude_weekends %>
+  </p>
+  <p>
+    <%= f.label :exclude_holidays, l(:field_sla_exclude_holidays) %>
+    <%= f.check_box :exclude_holidays %>
+  </p>
+</div>

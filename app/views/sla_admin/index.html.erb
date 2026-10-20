@@ -1,0 +1,10 @@
+<h2><%= l(:label_sla_admin) %></h2>
+
+<% tabs = [
+     { name: 'projects', partial: 'sla_admin/projects', label: :label_sla_project_settings },
+     { name: 'holidays', partial: 'sla_admin/holidays', label: :label_sla_holidays },
+     { name: 'rules',    partial: 'sla_admin/rules',    label: :label_sla_rules }
+   ] %>
+<%= render_tabs tabs %>
+
+<% html_title l(:label_administration), l(:label_sla_admin) %>

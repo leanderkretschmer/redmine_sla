@@ -1,0 +1,54 @@
+<div class="contextual">
+  <%= link_to l(:label_sla_add_project), new_sla_project_setting_path, class: 'icon icon-add' %>
+</div>
+
+<p class="sla-help"><%= l(:text_sla_projects_help) %></p>
+
+<% if @settings.empty? %>
+  <p class="nodata"><%= l(:label_no_data) %></p>
+<% else %>
+  <table class="list sla-settings-list">
+    <thead>
+      <tr>
+        <th><%= l(:field_project) %></th>
+        <th><%= l(:field_sla_response_time) %></th>
+        <th><%= l(:field_sla_puffer) %></th>
+        <th><%= l(:field_sla_business_hours) %></th>
+        <th><%= l(:field_sla_exclude_weekends) %></th>
+        <th><%= l(:field_sla_exclude_holidays) %></th>
+        <th><%= l(:label_sla_open_responses) %></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @settings.each do |s| %>
+        <tr class="<%= cycle('odd', 'even') %>">
+          <td><%= link_to h(s.project.name), project_sla_path(s.project) %></td>
+          <td><%= s.response_time_minutes %> <%= l(:label_minutes) %></td>
+          <td><%= s.puffer_minutes_before_eod %> <%= l(:label_minutes) %></td>
+          <td><%= '%02d:00' % s.sod_hour %> – <%= '%02d:00' % s.eod_hour %></td>
+          <td><%= checked_image s.exclude_weekends %></td>
+          <td><%= checked_image s.exclude_holidays %></td>
+          <td>
+            <%= @pending_counts[s.project_id].to_i %>
+            <% if @breached_counts[s.project_id].to_i > 0 %>
+              <span class="sla-badge sla-badge-red"><%= @breached_counts[s.project_id] %> <%= l(:label_sla_breached) %></span>
+            <% end %>
+          </td>
+          <td class="buttons">
+            <%= link_to l(:button_edit), edit_sla_project_setting_path(s), class: 'icon icon-edit' %>
+            <%= link_to l(:button_delete), sla_project_setting_path(s), method: :delete,
+                        data: { confirm: l(:text_sla_confirm_delete_setting) }, class: 'icon icon-del' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<% if @projects_without_sla.any? %>
+  <p class="sla-help">
+    <%= l(:label_sla_projects_without) %>:
+    <%= @projects_without_sla.map { |p| link_to(h(p.name), new_sla_project_setting_path(project_id: p.id)) }.join(', ').html_safe %>
+  </p>
+<% end %>

@@ -1,46 +1,7 @@
-<h2><%= @sla_rule.new_record? ? l(:new_sla_rule) : l(:edit_sla_rule) %></h2>
+<h2><%= link_to l(:label_sla_admin), sla_admin_path %> &#187; <%= l(:new_sla_rule) %></h2>
 
-<%= error_messages_for 'sla_rule' %>
-
-<%= form_for @sla_rule, url: @sla_rule.new_record? ? sla_rules_path : sla_rule_path(@sla_rule) do |f| %>
-  <table>
-    <tr>
-      <td><%= f.label :name, l(:label_sla_rule) %>*</td>
-      <td><%= f.text_field :name, size: 80 %></td>
-    </tr>
-    <tr>
-      <td><%= f.label :description, l(:description) %></td>
-      <td><%= f.text_area :description, rows: 3, size: '80x3' %></td>
-    </tr>
-    <tr>
-      <td><%= f.label :project_id, l(:field_project) %></td>
-      <td>
-        <%= f.collection_select :project_id, Project.active, :id, :name,
-              { include_hidden: false, include_blank: l(:label_all_projects) } %>
-      </td>
-    </tr>
-    <tr>
-      <td><%= f.label :tracker_id, l(:field_tracker) %></td>
-      <td>
-        <%= f.collection_select :tracker_id, Tracker.all, :id, :name,
-              { include_hidden: false, include_blank: l(:label_all_trackers) } %>
-      </td>
-    </tr>
-    <tr>
-      <td><%= f.label :priority, l(:field_priority) %></td>
-      <td><%= f.number_field :priority, min: 0 %></td>
-    </tr>
-    <tr>
-      <td><%= f.label :response_time_minutes, l(:label_response_time) %></td>
-      <td><%= f.number_field :response_time_minutes, min: 0 %> <%= l(:label_minutes) %></td>
-    </tr>
-    <tr>
-      <td><%= f.label :resolution_time_minutes, l(:label_resolution_time) %></td>
-      <td><%= f.number_field :resolution_time_minutes, min: 0 %> <%= l(:label_minutes) %></td>
-    </tr>
-  </table>
-
-  <p><%= f.submit %></p>
+<%= form_for @sla_rule, as: :sla_rule, url: sla_rules_path, method: :post do |f| %>
+  <%= render partial: 'form', locals: { f: f } %>
+  <%= f.submit l(:button_create) %>
+  <%= link_to l(:button_cancel), sla_admin_path(tab: 'rules') %>
 <% end %>
-
-<%= link_to l(:back), sla_rules_path, class: 'button' %>

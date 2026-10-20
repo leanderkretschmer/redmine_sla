@@ -1,59 +1,75 @@
+# Eine offene (oder erledigte) Antwortpflicht: ein externer Kommentar bzw. ein
+# extern erstelltes Ticket, das von einem internen Mitarbeiter beantwortet werden muss.
 class RedmineSla::SlaDeadline < ActiveRecord::Base
   self.table_name = 'sla_deadlines'
 
+  STATUS_PENDING   = 'pending'.freeze
+  STATUS_RESPONDED = 'responded'.freeze
+  STATUS_CLOSED    = 'closed'.freeze
+
   belongs_to :issue, class_name: 'Issue'
+  belongs_to :project, class_name: 'Project', optional: true
+  belongs_to :journal, class_name: 'Journal', optional: true
   belongs_to :sla_rule, class_name: 'RedmineSla::SlaRule', optional: true
-  belongs_to :issue_note, class_name: 'IssueNote', optional: true
+  belongs_to :responded_by, class_name: 'User', optional: true
+  belongs_to :response_journal, class_name: 'Journal', optional: true
 
-  scope :pending, -> { where(response_status: 'pending') }
+  scope :pending, -> { where(response_status: STATUS_PENDING) }
+  scope :for_project, ->(project) { where(project_id: project.id) }
+  scope :for_issue, ->(issue) { where(issue_id: issue.id) }
+  scope :visible, ->(user = User.current) {
+    joins(issue: :project).where(Issue.visible_condition(user))
+  }
+  scope :with_board_includes, -> {
+    includes(:journal, :sla_rule, issue: [:project, :author, :assigned_to, :status, :tracker])
+  }
 
-  scope :overdue, -> { where(response_status: 'pending').where('internal_deadline < ?', Time.now) }
-  scope :due_today, -> { where(response_status: 'pending')
-                         .where('internal_deadline >= ? AND internal_deadline <= ?',
-                                Date.today.beginning_of_day, Date.today.end_of_day) }
-  scope :upcoming, -> { where(response_status: 'pending').where('internal_deadline > ?', Date.today.end_of_day) }
-
-  scope :for_project, ->(project) { joins(:issue).where(issues: { project_id: project.id }) }
-  scope :for_issues, ->(issue_ids) { where(issue_id: issue_ids) }
-
-  def overdue?
-    response_status == 'pending' && internal_deadline < Time.now
+  def pending?
+    response_status == STATUS_PENDING
   end
 
-  def due_today?
-    return false unless response_status == 'pending'
-    internal_deadline.to_date == Date.today
+  # Wer hat die Antwortpflicht ausgelöst (Kommentarautor oder Ticketersteller)?
+  def external_author
+    journal ? journal.user : issue&.author
   end
 
-  def upcoming?
-    response_status == 'pending' && !overdue? && !due_today?
-  end
-
-  def breached?
-    status == :breached
-  end
-
-  def at_risk?
-    status == :at_risk
-  end
-
-  def ok?
-    status == :ok
+  def from_comment?
+    journal_id.present?
   end
 
   def status
-    return :cleared if response_status != 'pending'
-    return :breached if internal_deadline <= Time.now
-    return :at_risk if internal_deadline.to_date == Date.today
+    return :cleared unless pending?
+
+    now = Time.current
+    return :breached if internal_deadline <= now
+    return :at_risk if internal_deadline.in_time_zone(RedmineSla.time_zone).to_date <= now.in_time_zone(RedmineSla.time_zone).to_date
+
     :ok
   end
 
-  def status_label
+  def breached?; status == :breached; end
+  def at_risk?;  status == :at_risk;  end
+  def ok?;       status == :ok;       end
+
+  # Ampelfarbe für Views
+  def traffic_light
     case status
-    when :breached then 'breached'
-    when :at_risk then 'at_risk'
-    when :ok then 'ok'
-    else 'pending'
+    when :breached then 'red'
+    when :at_risk  then 'yellow'
+    when :ok       then 'green'
+    else 'grey'
     end
+  end
+
+  def status_label
+    status == :cleared ? 'pending' : status.to_s
+  end
+
+  def sort_rank
+    { breached: 0, at_risk: 1, ok: 2 }.fetch(status, 3)
+  end
+
+  def remaining_minutes
+    ((internal_deadline - Time.current) / 60).round
   end
 end

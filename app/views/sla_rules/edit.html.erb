@@ -1,0 +1,7 @@
+<h2><%= link_to l(:label_sla_admin), sla_admin_path %> &#187; <%= l(:edit_sla_rule) %></h2>
+
+<%= form_for @sla_rule, as: :sla_rule, url: sla_rule_path(@sla_rule), method: :patch do |f| %>
+  <%= render partial: 'form', locals: { f: f } %>
+  <%= f.submit l(:button_save) %>
+  <%= link_to l(:button_cancel), sla_admin_path(tab: 'rules') %>
+<% end %>

@@ -1,50 +1,71 @@
-# i18n
 de:
-  label_sla_dashboard: 'SLA - Meine Seite'
-  label_sla_rule: SLA-Regel
-  label_sla_rules: SLA-Regeln
-  label_sla_status: SLA-Status
-  label_resolution_time: Auflösungszeit
-  label_response_time: Reaktionsfrist
-  label_sla_breached: SLA verletzt
-  label_sla_at_risk: SLA gefährdet
-  label_sla_ok: SLA eingehalten
-  label_sla_no_sla: Keine SLA
-  label_sla_no_tickets: 'Keine Tickets mit offener SLA-Antwort'
-  label_last_external_comment: Letzter externer Kommentar
-  label_deadline: Frist
-  label_all_projects: Alle Projekte
-  label_all_trackers: Alle Trackertypen
-  label_all_statuses: Alle Status
-  new_sla_rule: Neue SLA-Regel
-  edit_sla_rule: SLA-Regel bearbeiten
-  notice_sla_rule_created: SLA-Regel wurde erstellt.
-  notice_sla_rule_updated: SLA-Regel wurde aktualisiert.
-  notice_sla_rule_deleted: SLA-Regel wurde gelöscht.
-  error_sla_rule_not_found: SLA-Regel nicht gefunden.
-  sla_menu: SLA-Übersicht
+  my:
+    blocks:
+      sla_overview: 'SLA – Zu beantworten'
 
-en:
-  label_sla_dashboard: 'SLA - My Page'
-  label_sla_rule: SLA Rule
-  label_sla_rules: SLA Rules
-  label_sla_status: SLA Status
-  label_resolution_time: Resolution Time
-  label_response_time: Response Time
-  label_sla_breached: SLA Breached
-  label_sla_at_risk: SLA at Risk
-  label_sla_ok: SLA OK
-  label_sla_no_sla: No SLA
-  label_sla_no_tickets: 'No tickets with pending SLA response'
-  label_last_external_comment: Last External Comment
-  label_deadline: Deadline
-  label_all_projects: All Projects
-  label_all_trackers: All Trackers
-  label_all_statuses: All Statuses
-  new_sla_rule: New SLA Rule
-  edit_sla_rule: Edit SLA Rule
-  notice_sla_rule_created: SLA rule has been created.
-  notice_sla_rule_updated: SLA rule has been updated.
-  notice_sla_rule_deleted: SLA rule has been deleted.
-  error_sla_rule_not_found: SLA rule not found.
-  sla_menu: SLA Overview
+  label_sla: SLA
+  label_sla_admin: SLA
+  label_sla_dashboard: 'SLA – Übersicht'
+  label_sla_my_page_block: 'SLA – Zu beantworten'
+  label_sla_project_settings: Projekt-SLAs
+  label_sla_add_project: Projekt-SLA hinzufügen
+  label_sla_projects_without: Projekte ohne SLA
+  label_sla_holidays: Feiertage
+  label_sla_add_holiday: Feiertag hinzufügen
+  label_sla_upcoming_holidays: Nächste Feiertage
+  label_sla_rules: Sonderregeln
+  label_sla_rule: Sonderregel
+  label_sla_open_responses: Offene Antworten
+  label_sla_status: SLA-Status
+  label_sla_breached: überfällig
+  label_sla_at_risk: heute fällig
+  label_sla_ok: im Zeitrahmen
+  label_sla_pending: offen
+  label_sla_no_sla: Keine SLA
+  label_sla_no_tickets: Keine Tickets oder Kommentare, die auf eine Antwort warten.
+  label_sla_comment_by: Kommentar von
+  label_sla_ticket_by: Ticket von
+  label_sla_unknown_author: Unbekannt
+  label_sla_due: Ablauf
+  label_sla_oclock: Uhr
+  label_resolution_time: Lösungszeit
+  label_response_time: Reaktionsfrist
+  label_minutes: Minuten
+  label_all_projects: Alle Projekte
+  label_all_trackers: Alle Tracker
+  label_no_sla_rules: Keine Sonderregeln vorhanden.
+  new_sla_rule: Neue Sonderregel
+  edit_sla_rule: Sonderregel bearbeiten
+
+  field_sla_response_time: Reaktionsfrist
+  field_sla_puffer: Puffer vor Feierabend
+  field_sla_sod_hour: Arbeitsbeginn
+  field_sla_eod_hour: Arbeitsende
+  field_sla_business_hours: Geschäftszeiten
+  field_sla_exclude_weekends: Wochenenden ausnehmen
+  field_sla_exclude_holidays: Feiertage ausnehmen
+  field_sla_time_zone: Zeitzone
+
+  notice_sla_rule_created: Sonderregel wurde erstellt.
+  notice_sla_rule_updated: Sonderregel wurde aktualisiert.
+  notice_sla_rule_deleted: Sonderregel wurde gelöscht.
+
+  text_sla_projects_help: >-
+    Nur Projekte mit einem Eintrag in dieser Liste haben ein SLA. Für sie werden Antwortfristen erzeugt,
+    sobald eine externe Person (nicht im Human-Resources-Plugin als Mitarbeiter hinterlegt) ein Ticket anlegt
+    oder kommentiert – per Weboberfläche, E-Mail oder TYPO3-Anbindung. Eine öffentliche Antwort eines
+    Mitarbeiters oder das Schließen des Tickets erledigt die Frist.
+  text_sla_holidays_help: >-
+    Feiertage zählen nicht als Arbeitszeit. Ohne Projekt gilt der Feiertag für alle Projekte.
+  text_sla_rules_help: >-
+    Sonderregeln überschreiben die Reaktionsfrist eines Projekt-SLAs für bestimmte Tracker.
+    Bei mehreren passenden Regeln gewinnt die höchste Priorität.
+  text_sla_response_time_info: Arbeitsminuten innerhalb der Geschäftszeiten bis zur ersten Antwort.
+  text_sla_puffer_info: Die interne Frist liegt spätestens so viele Minuten vor Arbeitsende des Fristtags.
+  text_sla_time_zone_info: 'Zeitzone: %{zone} (änderbar in den Plugin-Einstellungen).'
+  text_sla_time_zone_setting_info: Zeitzone, in der Arbeitsbeginn und -ende interpretiert werden.
+  text_sla_plugin_settings_help: >-
+    Diese Werte dienen als Vorbelegung für neue Projekt-SLAs. Die SLAs der einzelnen Projekte werden verwaltet unter
+  text_sla_rule_project_info: Nur Projekte mit Projekt-SLA; ohne Auswahl gilt die Regel in allen SLA-Projekten.
+  text_sla_rule_priority_info: Höhere Zahl gewinnt bei mehreren passenden Regeln.
+  text_sla_confirm_delete_setting: Projekt-SLA löschen? Alle offenen Antwortfristen dieses Projekts werden entfernt.

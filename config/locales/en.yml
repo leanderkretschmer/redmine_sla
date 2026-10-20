@@ -1,0 +1,68 @@
+en:
+  my:
+    blocks:
+      sla_overview: 'SLA – Awaiting response'
+
+  label_sla: SLA
+  label_sla_admin: SLA
+  label_sla_dashboard: 'SLA – Overview'
+  label_sla_my_page_block: 'SLA – Awaiting response'
+  label_sla_project_settings: Project SLAs
+  label_sla_add_project: Add project SLA
+  label_sla_projects_without: Projects without SLA
+  label_sla_holidays: Holidays
+  label_sla_add_holiday: Add holiday
+  label_sla_upcoming_holidays: Upcoming holidays
+  label_sla_rules: Special rules
+  label_sla_rule: Special rule
+  label_sla_open_responses: Open responses
+  label_sla_status: SLA status
+  label_sla_breached: overdue
+  label_sla_at_risk: due today
+  label_sla_ok: on track
+  label_sla_pending: pending
+  label_sla_no_sla: No SLA
+  label_sla_no_tickets: No tickets or comments waiting for a response.
+  label_sla_comment_by: Comment by
+  label_sla_ticket_by: Ticket by
+  label_sla_unknown_author: Unknown
+  label_sla_due: Due
+  label_sla_oclock: "o'clock"
+  label_resolution_time: Resolution time
+  label_response_time: Response time
+  label_minutes: minutes
+  label_all_projects: All projects
+  label_all_trackers: All trackers
+  label_no_sla_rules: No special rules defined.
+  new_sla_rule: New special rule
+  edit_sla_rule: Edit special rule
+
+  field_sla_response_time: Response time
+  field_sla_puffer: Buffer before end of day
+  field_sla_sod_hour: Start of business
+  field_sla_eod_hour: End of business
+  field_sla_business_hours: Business hours
+  field_sla_exclude_weekends: Exclude weekends
+  field_sla_exclude_holidays: Exclude holidays
+  field_sla_time_zone: Time zone
+
+  notice_sla_rule_created: Special rule has been created.
+  notice_sla_rule_updated: Special rule has been updated.
+  notice_sla_rule_deleted: Special rule has been deleted.
+
+  text_sla_projects_help: >-
+    Only projects listed here have an SLA. For them, response deadlines are created whenever an external
+    person (not registered as an employee in the Human Resources plugin) creates or comments on a ticket –
+    via web, e-mail or the TYPO3 integration. A public reply by an employee or closing the ticket clears the deadline.
+  text_sla_holidays_help: Holidays do not count as business time. Without a project the holiday applies to all projects.
+  text_sla_rules_help: >-
+    Special rules override a project SLA's response time for specific trackers.
+    If several rules match, the highest priority wins.
+  text_sla_response_time_info: Business minutes within business hours until the first reply.
+  text_sla_puffer_info: The internal deadline is at the latest this many minutes before end of business on the due day.
+  text_sla_time_zone_info: 'Time zone: %{zone} (configurable in the plugin settings).'
+  text_sla_time_zone_setting_info: Time zone used to interpret start and end of business.
+  text_sla_plugin_settings_help: These values pre-fill new project SLAs. Project SLAs are managed under
+  text_sla_rule_project_info: Only projects with a project SLA; leave empty to apply the rule in all SLA projects.
+  text_sla_rule_priority_info: Higher number wins when several rules match.
+  text_sla_confirm_delete_setting: Delete project SLA? All open response deadlines of this project will be removed.

@@ -1,45 +1,32 @@
-<%# Plugin Settings %>
-<h2><%= l(:label_sla_settings) %></h2>
+<%# Globale Plugin-Einstellungen: Vorbelegung neuer Projekt-SLAs und Zeitzone %>
+<p class="sla-help">
+  <%= l(:text_sla_plugin_settings_help) %>
+  <%= link_to l(:label_sla_admin), sla_admin_path %>
+</p>
 
-<form id="redmine_sla_settings" action="<%= settings_path(:plugin, 'redmine_sla') %>" method="post">
-  <%= hidden_field_tag('tab', 'general') %>
-
-  <table class="list">
-    <tr>
-      <td><label for="setting_default_response_time_minutes"><%= l(:label_response_time) %></label></td>
-      <td>
-        <%= text_field_tag('settings[default_response_time_minutes]',
-                            settings['default_response_time_minutes'] || '240',
-                            size: 10) %>
-        <span class="help"><%= l(:label_minutes) %></span>
-      </td>
-    </tr>
-    <tr>
-      <td><label for="setting_default_puffer_minutes"><%= l(:label_puffer) %></label></td>
-      <td>
-        <%= text_field_tag('settings[default_puffer_minutes]',
-                            settings['default_puffer_minutes'] || '120',
-                            size: 10) %>
-        <span class="help"><%= l(:label_minutes) %></span>
-      </td>
-    </tr>
-    <tr>
-      <td><label for="setting_default_sod_hour"><%= l(:label_start_of_day) %></label></td>
-      <td>
-        <%= text_field_tag('settings[default_sod_hour]',
-                            settings['default_sod_hour'] || '7',
-                            size: 5) %>
-      </td>
-    </tr>
-    <tr>
-      <td><label for="setting_default_eod_hour"><%= l(:label_end_of_day) %></label></td>
-      <td>
-        <%= text_field_tag('settings[default_eod_hour]',
-                            settings['default_eod_hour'] || '18',
-                            size: 5) %>
-      </td>
-    </tr>
-  </table>
-
-  <p><%= submit_tag l(:button_save) %></p>
-</form>
+<p>
+  <label for="settings_default_response_time_minutes"><%= l(:field_sla_response_time) %></label>
+  <%= number_field_tag 'settings[default_response_time_minutes]', settings['default_response_time_minutes'] || '240', min: 1, size: 6 %>
+  <%= l(:label_minutes) %>
+</p>
+<p>
+  <label for="settings_default_puffer_minutes"><%= l(:field_sla_puffer) %></label>
+  <%= number_field_tag 'settings[default_puffer_minutes]', settings['default_puffer_minutes'] || '120', min: 0, size: 6 %>
+  <%= l(:label_minutes) %>
+</p>
+<p>
+  <label for="settings_default_sod_hour"><%= l(:field_sla_sod_hour) %></label>
+  <%= number_field_tag 'settings[default_sod_hour]', settings['default_sod_hour'] || '7', min: 0, max: 23, size: 3 %>
+  <%= l(:label_sla_oclock) %>
+</p>
+<p>
+  <label for="settings_default_eod_hour"><%= l(:field_sla_eod_hour) %></label>
+  <%= number_field_tag 'settings[default_eod_hour]', settings['default_eod_hour'] || '18', min: 1, max: 24, size: 3 %>
+  <%= l(:label_sla_oclock) %>
+</p>
+<p>
+  <label for="settings_time_zone"><%= l(:field_sla_time_zone) %></label>
+  <%= select_tag 'settings[time_zone]',
+                 options_for_select(ActiveSupport::TimeZone.all.map { |z| [z.to_s, z.name] }, settings['time_zone'] || 'Europe/Berlin') %>
+  <em class="info"><%= l(:text_sla_time_zone_setting_info) %></em>
+</p>

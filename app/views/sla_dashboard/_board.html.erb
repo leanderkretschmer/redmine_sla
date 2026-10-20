@@ -1,0 +1,20 @@
+<%# Spaltenansicht: ein Projekt pro Spalte, Karten nach Dringlichkeit sortiert %>
+<% if board.empty? %>
+  <p class="nodata"><%= l(:label_sla_no_tickets) %></p>
+<% else %>
+  <div class="sla-board<%= ' sla-board-compact' if local_assigns[:compact] %>">
+    <% board.columns.each do |project, deadlines| %>
+      <div class="sla-column">
+        <div class="sla-column-header">
+          <h4><%= link_to h(project.name), project_sla_path(project), title: project.identifier %></h4>
+          <span class="sla-count"><%= deadlines.size %></span>
+        </div>
+        <div class="sla-column-body">
+          <% deadlines.each do |deadline| %>
+            <%= render partial: 'sla_dashboard/card', locals: { deadline: deadline } %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

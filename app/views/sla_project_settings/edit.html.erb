@@ -1,0 +1,7 @@
+<h2><%= link_to l(:label_sla_admin), sla_admin_path %> &#187; <%= h(@setting.project.name) %></h2>
+
+<%= form_for @setting, as: :sla_setting, url: sla_project_setting_path(@setting), method: :patch do |f| %>
+  <%= render partial: 'form', locals: { f: f } %>
+  <%= f.submit l(:button_save) %>
+  <%= link_to l(:button_cancel), sla_admin_path(tab: 'projects') %>
+<% end %>

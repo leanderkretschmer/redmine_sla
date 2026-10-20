@@ -1,217 +1,57 @@
-/* SLA Dashboard Styles */
+/* Redmine SLA Plugin – Ampel-Board */
 
-.sla-stats-overview {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
+.sla-stats { display: flex; flex-wrap: wrap; gap: 1rem; margin: 0 0 1em; font-size: 0.9em; }
+.sla-stat { display: inline-flex; align-items: center; gap: 0.35em; padding: 0.2em 0.6em; border-radius: 3px; border: 1px solid #ddd; }
+.sla-stat strong { font-size: 1.2em; }
+.sla-stat.sla-red strong { color: #c62828; }
+.sla-stat.sla-yellow strong { color: #b58900; }
+.sla-stat.sla-green strong { color: #2e7d32; }
 
-.sla-stats-overview .stat-item {
-  flex: 1;
-  text-align: center;
-  padding: 0.75rem;
-  border-radius: 4px;
-  background: var(--background);
-  border: 1px solid var(--border);
-}
+.sla-help { color: #666; font-size: 0.9em; margin: 0.5em 0 1em; }
 
-.sla-stats-overview .stat-number {
-  display: block;
-  font-size: 2rem;
-  font-weight: bold;
-}
+/* Spalten */
+.sla-board { display: flex; gap: 0.75rem; overflow-x: auto; padding-bottom: 0.5rem; align-items: flex-start; }
+.sla-column { flex: 0 0 260px; min-width: 220px; border: 1px solid #ccc; border-radius: 4px; background: #fafafa; }
+.sla-board-compact .sla-column { flex: 0 0 220px; min-width: 200px; }
+.sla-column-header { display: flex; justify-content: space-between; align-items: center; gap: 0.5em; padding: 0.4em 0.6em; border-bottom: 1px solid #ccc; background: #eee; border-radius: 4px 4px 0 0; }
+.sla-column-header h4 { margin: 0; font-size: 0.95em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sla-count { background: #666; color: #fff; border-radius: 10px; padding: 0 0.5em; font-size: 0.75em; font-weight: bold; }
+.sla-column-body { display: flex; flex-direction: column; gap: 0.4rem; padding: 0.4rem; }
 
-.sla-stats-overview .stat-label {
-  font-size: 0.85rem;
-  color: var(--muted);
-}
+/* Karten */
+.sla-card { border: 1px solid #ccc; border-left: 6px solid #999; border-radius: 3px; background: #fff; padding: 0.4em 0.5em; font-size: 0.85em; line-height: 1.35; }
+.sla-card.sla-red    { border-left-color: #c62828; background: #fdecea; }
+.sla-card.sla-yellow { border-left-color: #f2b600; background: #fff8e1; }
+.sla-card.sla-green  { border-left-color: #2e7d32; background: #eaf5ea; }
+.sla-card-title { font-weight: 600; margin-bottom: 0.25em; word-break: break-word; }
+.sla-card-title a { text-decoration: none; }
+.sla-card-title a:hover { text-decoration: underline; }
+.sla-card-row { margin: 0.1em 0; }
+.sla-card-row .sla-label { color: #555; }
+.sla-card-row.sla-muted { color: #777; font-size: 0.92em; }
+.sla-card-row.sla-due { font-weight: 600; margin-top: 0.3em; }
+.sla-card.sla-red .sla-due { color: #b71c1c; }
+.sla-card.sla-yellow .sla-due { color: #8a6d00; }
+.sla-card.sla-green .sla-due { color: #1b5e20; }
 
-.stat-breached .stat-number { color: #dc3545; }
-.stat-at_risk .stat-number { color: #ffc107; }
-.stat-ok .stat-number { color: #28a745; }
+/* Badges */
+.sla-badge { display: inline-block; border-radius: 10px; padding: 0 0.55em; font-size: 0.8em; font-weight: bold; color: #fff; background: #666; vertical-align: middle; }
+.sla-badge-red { background: #c62828; }
+.sla-badge-yellow { background: #f2b600; color: #333; }
+.sla-badge-green { background: #2e7d32; }
 
-/* Legend */
-.sla-legend {
-  display: flex;
-  gap: 1.5rem;
-  margin-bottom: 1rem;
-  font-size: 0.85rem;
-}
+/* Admin */
+.sla-inline-form fieldset.box { margin-bottom: 1em; }
+.sla-project-settings ul { margin: 0.3em 0 0.5em 1.2em; }
+.sla-settings-list td.buttons { white-space: nowrap; }
 
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-.legend-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.legend-dot.green { background: #28a745; }
-.legend-dot.yellow { background: #ffc107; }
-.legend-dot.red { background: #dc3545; }
-
-/* Project Columns Layout */
-.sla-project-columns {
-  display: flex;
-  gap: 1rem;
-  overflow-x: auto;
-  padding-bottom: 1rem;
-}
-
-.sla-project-column {
-  flex: 0 0 280px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  background: var(--background);
-  min-height: 200px;
-}
-
-.column-header {
-  padding: 0.75rem;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: var(--muted-background);
-  border-radius: 6px 6px 0 0;
-}
-
-.column-header h3 {
-  margin: 0;
-  font-size: 0.95rem;
-}
-
-.count-badge {
-  background: var(--accent);
-  color: white;
-  border-radius: 12px;
-  padding: 0.15rem 0.5rem;
-  font-size: 0.75rem;
-  font-weight: bold;
-}
-
-.column-body {
-  padding: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  min-height: 100px;
-}
-
-/* Ticket Cards */
-.sla-ticket-card {
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  background: var(--card-background);
-  display: flex;
-  overflow: hidden;
-  transition: box-shadow 0.2s;
-}
-
-.sla-ticket-card:hover {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.card-indicator {
-  width: 4px;
-  flex-shrink: 0;
-}
-
-.sla-breached .card-indicator { background: #dc3545; }
-.sla-at_risk .card-indicator { background: #ffc107; }
-.sla-ok .card-indicator { background: #28a745; }
-
-.card-content {
-  padding: 0.5rem;
-  flex: 1;
-}
-
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 0.5rem;
-  margin-bottom: 0.4rem;
-}
-
-.ticket-id {
-  font-weight: 600;
-  font-size: 0.9rem;
-}
-
-.ticket-id a {
-  text-decoration: none;
-}
-
-.ticket-id a:hover {
-  text-decoration: underline;
-}
-
-.status-badge {
-  font-size: 0.7rem;
-  padding: 0.15rem 0.4rem;
-  border-radius: 3px;
-  text-transform: uppercase;
-  font-weight: bold;
-  flex-shrink: 0;
-}
-
-.sla-breached .status-badge {
-  background: #dc3545;
-  color: white;
-}
-
-.sla-at_risk .status-badge {
-  background: #ffc107;
-  color: #333;
-}
-
-.sla-ok .status-badge {
-  background: #28a745;
-  color: white;
-}
-
-.card-details {
-  font-size: 0.8rem;
-}
-
-.detail-row {
-  margin-bottom: 0.25rem;
-}
-
-.detail-row .label {
-  font-weight: 600;
-  color: var(--muted);
-  margin-right: 0.25rem;
-}
-
-.detail-row .value {
-  color: var(--foreground);
-}
-
-.comment-author {
-  font-weight: 500;
-}
-
-.comment-time,
-.deadline-value {
-  color: var(--muted);
-  font-size: 0.75rem;
-}
-
-.deadline-row .deadline-value {
-  color: var(--foreground);
-  font-weight: 500;
-}
-
-/* No tickets message */
-.sla-no-tickets {
-  text-align: center;
-  padding: 2rem;
-  width: 100%;
+/* Dark-Theme-freundliche Farben über Redmine-Variablen, falls vorhanden */
+@media (prefers-color-scheme: dark) {
+  .sla-column { background: rgba(255,255,255,0.03); border-color: #555; }
+  .sla-column-header { background: rgba(255,255,255,0.06); border-color: #555; }
+  .sla-card { background: rgba(255,255,255,0.04); border-color: #555; }
+  .sla-card.sla-red    { background: rgba(198,40,40,0.18); }
+  .sla-card.sla-yellow { background: rgba(242,182,0,0.18); }
+  .sla-card.sla-green  { background: rgba(46,125,50,0.18); }
+  .sla-card-row .sla-label, .sla-card-row.sla-muted { color: #aaa; }
 }

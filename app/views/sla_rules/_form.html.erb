@@ -1,0 +1,36 @@
+<%= error_messages_for @sla_rule %>
+
+<div class="box tabular">
+  <p>
+    <%= f.label :name, l(:label_sla_rule) %><span class="required"> *</span>
+    <%= f.text_field :name, size: 60, required: true %>
+  </p>
+  <p>
+    <%= f.label :description, l(:field_description) %>
+    <%= f.text_area :description, rows: 3, cols: 60 %>
+  </p>
+  <p>
+    <%= f.label :project_id, l(:field_project) %>
+    <%= f.select :project_id,
+                 options_for_select([[l(:label_all_projects), '']] + RedmineSla::SlaSetting.sorted.includes(:project).map { |s| [s.project.name, s.project_id] }, @sla_rule.project_id) %>
+    <em class="info"><%= l(:text_sla_rule_project_info) %></em>
+  </p>
+  <p>
+    <%= f.label :tracker_id, l(:field_tracker) %>
+    <%= f.select :tracker_id,
+                 options_for_select([[l(:label_all_trackers), '']] + Tracker.sorted.map { |t| [t.name, t.id] }, @sla_rule.tracker_id) %>
+  </p>
+  <p>
+    <%= f.label :priority, l(:field_priority) %>
+    <%= f.number_field :priority, min: 0, step: 1, size: 4 %>
+    <em class="info"><%= l(:text_sla_rule_priority_info) %></em>
+  </p>
+  <p>
+    <%= f.label :response_time_minutes, l(:field_sla_response_time) %><span class="required"> *</span>
+    <%= f.number_field :response_time_minutes, min: 1, step: 1, size: 6, required: true %> <%= l(:label_minutes) %>
+  </p>
+  <p>
+    <%= f.label :resolution_time_minutes, l(:label_resolution_time) %>
+    <%= f.number_field :resolution_time_minutes, min: 1, step: 1, size: 6 %> <%= l(:label_minutes) %>
+  </p>
+</div>

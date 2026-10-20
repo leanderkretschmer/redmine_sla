@@ -1,23 +1,25 @@
+# Namespace des SLA-Plugins. Die Klassen unter lib/redmine_sla/ werden von
+# Zeitwerk (Redmine >= 5) automatisch geladen; hier liegen nur kleine Helfer.
 module RedmineSla
-end
-
-require_relative 'redmine_sla/sla_rule'
-require_relative 'redmine_sla/sla_deadline'
-require_relative 'redmine_sla/sla_setting'
-require_relative 'redmine_sla/sla_holiday'
-require_relative 'redmine_sla/sla_calendar'
-require_relative 'redmine_sla/hooks'
-
-ActiveSupport::Reloader.to_prepare do
-end
-
-module RedmineSla
-  class Setup
-    def self.ensure_settings
-    end
+  def self.settings
+    Setting.plugin_redmine_sla || {}
+  rescue StandardError
+    {}
   end
-end
 
-Rails.application.config.after_initialize do
-  RedmineSla::Setup.ensure_settings
+  def self.setting(key, default = nil)
+    value = settings[key.to_s]
+    value.nil? || value.to_s.strip.empty? ? default : value
+  end
+
+  # Zeitzone, in der Geschäftszeiten (SOD/EOD) interpretiert werden.
+  def self.time_zone
+    ActiveSupport::TimeZone[setting(:time_zone, 'Europe/Berlin').to_s] ||
+      Time.zone ||
+      ActiveSupport::TimeZone['UTC']
+  end
+
+  def self.log(level, message)
+    Rails.logger.public_send(level, "[redmine_sla] #{message}") if Rails.logger
+  end
 end

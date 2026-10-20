@@ -1,53 +1,52 @@
 = Redmine SLA Plugin
 
-== Description
+== Beschreibung
 
-Ein Redmine Plugin zur Verwaltung von SLA (Service Level Agreements) in Redmine.
+Reaktionsfristen (SLA) für Redmine: Sobald eine *externe* Person ein Ticket anlegt oder kommentiert
+(Weboberfläche, E-Mail über den Mail-Handler, TYPO3-Anbindung), entsteht eine Antwortpflicht mit Frist.
+Eine öffentliche Antwort eines Mitarbeiters oder das Schließen des Tickets erledigt sie.
 
-== Features
+Als *intern* gelten die im Plugin +redmine_human_resources+ hinterlegten Mitarbeiter
+(Anstellungsart/Eintrittsdatum gesetzt oder Zeit-/Abwesenheitsbuchungen vorhanden).
+Ohne HR-Plugin gelten alle aktiven, nicht gesperrten Benutzerkonten als intern.
 
-- SLA-Regeln für Projektvorlagen und Issue-Status erstellen
-- SLA-Einhaltung bei Issues überwachen
-- Benachrichtigungen bei SLA-Verletzungen
+== Funktionen
 
-== Requirements
+- Administration → *SLA*: SLAs pro Projekt (Reaktionsfrist, Puffer vor Feierabend, Geschäftszeiten,
+  Wochenenden/Feiertage), Feiertage (global oder je Projekt) und Sonderregeln je Tracker.
+- Nur Projekte mit Projekt-SLA erhalten den Projekt-Reiter *SLA* und Antwortfristen.
+- "Meine Seite"-Block *SLA – Zu beantworten*: pro Projekt eine Spalte, pro Ticket eine Ampelkarte
+  (Ticket, Kommentar von / Ticket von, Zeitpunkt, Ablauf).
+  Rot = überfällig, Gelb = heute fällig, Grün = im Zeitrahmen.
+- Gesamtübersicht unter +/sla/dashboard+.
+- Fristberechnung in Arbeitsminuten innerhalb der Geschäftszeiten (Zeitzone in den Plugin-Einstellungen).
+- Beim Anlegen/Ändern eines Projekt-SLAs werden offene Fristen aus der Ticket-Historie aufgebaut.
+  Manuell: +bundle exec rake redmine_sla:rebuild [PROJECT=identifier] RAILS_ENV=production+
 
-- Redmine 5.x
+== Voraussetzungen
+
+- Redmine 5.x / 6.x
+- optional: redmine_human_resources (Mitarbeiter-Erkennung)
 
 == Installation
 
-1. Clone this plugin into your Redmine plugins directory:
-
     cd /path/to/redmine
     git clone https://github.com/leanderkretschmer/redmine_sla.git plugins/redmine_sla
+    RAILS_ENV=production bundle exec rake redmine:plugins:migrate NAME=redmine_sla
 
-2. Install dependencies:
+Redmine neu starten, dann unter Administration → SLA Projekte eintragen und auf "Meine Seite"
+den Block *SLA – Zu beantworten* hinzufügen.
 
-    bundle install
-
-3. Run migrations:
-
-    RAILS_ENV=production bundle exec rake redmine:plugins:migrate
-
-4. Restart Redmine
-
-== Uninstall
-
-1. Run reverse migration:
+== Deinstallation
 
     RAILS_ENV=production bundle exec rake redmine:plugins:migrate NAME=redmine_sla VERSION=0
-
-2. Remove the plugin directory:
-
     rm -rf plugins/redmine_sla
 
-3. Restart Redmine
-
-== License
+== Lizenz
 
 MIT
 
-== Author
+== Autor
 
 Leander Kretschmer
 https://github.com/leanderkretschmer

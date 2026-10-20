@@ -1,0 +1,9 @@
+<%# "Meine Seite"-Block: zu beantwortende Tickets und Kommentare %>
+<% board = RedmineSla::Board.for_user(user) %>
+<h3>
+  <%= link_to l(:label_sla_my_page_block), sla_dashboard_path %>
+  <% unless board.empty? %>
+    <span class="badge badge-count sla-badge sla-badge-<%= board.stats[:breached] > 0 ? 'red' : (board.stats[:at_risk] > 0 ? 'yellow' : 'green') %>"><%= board.size %></span>
+  <% end %>
+</h3>
+<%= render partial: 'sla_dashboard/board', locals: { board: board, compact: true } %>

@@ -1,0 +1,7 @@
+<h2><%= link_to l(:label_sla_admin), sla_admin_path %> &#187; <%= l(:label_sla_add_project) %></h2>
+
+<%= form_for @setting, as: :sla_setting, url: sla_project_settings_path, method: :post do |f| %>
+  <%= render partial: 'form', locals: { f: f } %>
+  <%= f.submit l(:button_create) %>
+  <%= link_to l(:button_cancel), sla_admin_path(tab: 'projects') %>
+<% end %>

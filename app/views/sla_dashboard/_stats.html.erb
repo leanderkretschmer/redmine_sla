@@ -1,0 +1,5 @@
+<div class="sla-stats">
+  <span class="sla-stat sla-red"><strong><%= board.stats[:breached] %></strong> <%= l(:label_sla_breached) %></span>
+  <span class="sla-stat sla-yellow"><strong><%= board.stats[:at_risk] %></strong> <%= l(:label_sla_at_risk) %></span>
+  <span class="sla-stat sla-green"><strong><%= board.stats[:ok] %></strong> <%= l(:label_sla_ok) %></span>
+</div>
