@@ -15,7 +15,7 @@ Redmine::Plugin.register :redmine_sla do
   description 'SLA-Management für Redmine - Reaktionsfristen für externe Tickets und Kommentare mit Ampelsystem.'
   version '0.4.0'
 
-  requires_redmine version_or_higher: '5.0.0'
+  requires_redmine version_or_higher: '6.0.0'
 
   settings default: {
     'default_response_time_minutes' => '240',

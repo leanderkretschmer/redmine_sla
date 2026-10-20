@@ -25,7 +25,7 @@ Ohne HR-Plugin gelten alle aktiven, nicht gesperrten Benutzerkonten als intern.
 
 == Voraussetzungen
 
-- Redmine 5.x / 6.x
+- Redmine 6.x (Plugin-Assets liegen unter assets/, wie seit Redmine 6 vorgesehen)
 - optional: redmine_human_resources (Mitarbeiter-Erkennung)
 
 == Installation
