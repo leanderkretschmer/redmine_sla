@@ -1,7 +1,7 @@
 <%# Ampelkarte für eine offene Antwortpflicht %>
 <% issue = deadline.issue %>
 <% author = deadline.external_author %>
-<div class="sla-card sla-<%= deadline.traffic_light %>" title="<%= l("label_sla_#{deadline.status_label}") %>"<% unless local_assigns[:embed] %> data-detail-url="<%= sla_deadline_path(deadline) %>" data-issue-url="<%= issue_url(issue, anchor: (deadline.journal ? "change-#{deadline.journal.id}" : nil)) %>" data-title="#<%= issue.id %> <%= h(issue.subject) %>"<% end %>>
+<div class="sla-card sla-<%= deadline.traffic_light %><%= ' sla-mine-card' if issue.assigned_to_id && issue.assigned_to_id == User.current.id %>" data-assignee="<%= issue.assigned_to_id %>" title="<%= l("label_sla_#{deadline.status_label}") %>"<% unless local_assigns[:embed] %> data-detail-url="<%= sla_deadline_path(deadline) %>" data-issue-url="<%= issue_url(issue, anchor: (deadline.journal ? "change-#{deadline.journal.id}" : nil)) %>" data-title="#<%= issue.id %> <%= h(issue.subject) %>"<% end %>>
   <div class="sla-card-title">
     <%= link_to "##{issue.id} #{issue.subject}", issue_url(issue, anchor: (deadline.journal ? "change-#{deadline.journal.id}" : nil)), class: "issue #{issue.css_classes}".strip, target: (local_assigns[:embed] ? '_top' : nil) %>
   </div>

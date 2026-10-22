@@ -6,7 +6,7 @@ class SlaDashboardController < ApplicationController
 
   def index
     @project = Project.find_by(identifier: params[:project_id]) || Project.find_by(id: params[:project_id]) if params[:project_id].present?
-    @board = RedmineSla::Board.for_user(User.current, project: @project)
+    @board = RedmineSla::Board.for_user(User.current, project: @project, mine: params[:mine].present?)
 
     if @embed
       @refresh = params[:refresh].to_i

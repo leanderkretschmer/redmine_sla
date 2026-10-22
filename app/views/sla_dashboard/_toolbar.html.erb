@@ -1,0 +1,4 @@
+<%# Umschalter "Mir zugewiesen" (clientseitiger Filter über alle Boards der Seite) %>
+<span class="sla-toolbar">
+  <button type="button" class="sla-mine-toggle" data-user-id="<%= User.current.id %>" aria-pressed="false" title="<%= l(:text_sla_mine_hint) %>"><%= l(:button_sla_mine) %></button>
+</span>

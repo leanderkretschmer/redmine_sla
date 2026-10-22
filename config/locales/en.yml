@@ -110,6 +110,11 @@ en:
   text_sla_rebuild_confirm: Rebuild all open response deadlines from the ticket history?
   text_sla_rebuild_info: Re-evaluates all open tickets of SLA projects (after changing status rules, holidays or employees).
 
+  button_sla_exclude: Remove from SLA
+
+  button_sla_mine: Assigned to me
+  text_sla_mine_hint: Show only entries whose ticket is assigned to me
+
   notice_sla_rule_created: Special rule has been created.
   notice_sla_rule_updated: Special rule has been updated.
   notice_sla_rule_deleted: Special rule has been deleted.

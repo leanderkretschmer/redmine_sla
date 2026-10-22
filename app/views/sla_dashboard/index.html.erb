@@ -1,4 +1,5 @@
 <div class="contextual">
+  <%= render partial: 'sla_dashboard/toolbar' %>
   <% if User.current.admin? %>
     <%= link_to l(:label_sla_admin), sla_admin_path, class: 'icon icon-settings' %>
   <% end %>

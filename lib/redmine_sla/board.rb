@@ -3,9 +3,10 @@ module RedmineSla
   class Board
     attr_reader :deadlines, :columns, :stats
 
-    def self.for_user(user = User.current, project: nil)
+    def self.for_user(user = User.current, project: nil, mine: false)
       scope = SlaDeadline.pending.visible(user).with_board_includes
       scope = scope.where(project_id: project.id) if project
+      scope = scope.where(issues: { assigned_to_id: user.id }) if mine
       new(scope.to_a)
     end
 

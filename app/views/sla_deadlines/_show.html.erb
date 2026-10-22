@@ -1,6 +1,6 @@
 <%# Popup-Inhalt: Ticket mit Verlauf, Auslöser hervorgehoben %>
 <% issue = @issue; d = @deadline %>
-<div class="sla-popup" data-deadline-id="<%= d.id %>" data-highlight="<%= d.journal_id ? "sla-journal-#{d.journal_id}" : 'sla-issue-description' %>">
+<div class="sla-popup" data-deadline-id="<%= d.id %>" data-highlight="<%= d.journal_id ? "sla-journal-#{d.journal_id}" : 'sla-issue-description' %>"<% if @can_exclude %> data-exclude-url="<%= exclude_sla_deadline_path(d) %>" data-exclude-confirm="<%= d.journal_id ? l(:text_sla_exclude_comment_confirm) : l(:text_sla_exclude_ticket_confirm) %>"<% end %>>
   <div class="sla-popup-head">
     <div class="sla-popup-title">
       <span class="sla-light sla-light-<%= d.traffic_light %>"><%= l("label_sla_#{d.status_label}") %></span>
@@ -45,16 +45,6 @@
           <div class="sla-journal-notes wiki"><%= textilizable(j, :notes) %></div>
         <% end %>
       </div>
-    <% end %>
-  </div>
-
-  <div class="sla-popup-foot">
-    <% if @can_exclude %>
-      <button type="button" class="sla-exclude-btn" data-url="<%= exclude_sla_deadline_path(d) %>"
-              data-confirm="<%= d.journal_id ? l(:text_sla_exclude_comment_confirm) : l(:text_sla_exclude_ticket_confirm) %>">
-        <%= d.journal_id ? l(:button_sla_exclude_comment) : l(:button_sla_exclude_ticket) %>
-      </button>
-      <span class="sla-help"><%= l(:text_sla_exclude_info) %></span>
     <% end %>
   </div>
 </div>

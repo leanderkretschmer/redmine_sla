@@ -112,6 +112,11 @@ de:
   text_sla_rebuild_confirm: Alle offenen Antwortfristen aus der Ticket-Historie neu aufbauen?
   text_sla_rebuild_info: Bewertet alle offenen Tickets der SLA-Projekte neu (nach Änderung von Status-Regeln, Feiertagen oder Mitarbeitern).
 
+  button_sla_exclude: Aus SLA entfernen
+
+  button_sla_mine: Mir zugewiesen
+  text_sla_mine_hint: Nur Tickets und Kommentare zeigen, deren Ticket mir zugewiesen ist
+
   notice_sla_rule_created: Sonderregel wurde erstellt.
   notice_sla_rule_updated: Sonderregel wurde aktualisiert.
   notice_sla_rule_deleted: Sonderregel wurde gelöscht.

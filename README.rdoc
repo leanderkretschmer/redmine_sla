@@ -21,7 +21,9 @@ Ohne HR-Plugin gelten alle aktiven, nicht gesperrten Benutzerkonten als intern.
   pro Projekt eine Spalte, pro Ticket eine Ampelkarte
   (Ticket, Kommentar von / Ticket von, Zeitpunkt, Ablauf).
   Rot = überfällig, Gelb = heute fällig, Grün = im Zeitrahmen.
-- Klick auf einen Projektnamen im Block/Dashboard: Fokus-Modus, nur dieses Projekt als Raster über die ganze Seite.
+- Klick auf einen Projektnamen im Block/Dashboard: Fokus-Modus, nur dieses Projekt, Einträge als Raster in voller Breite.
+- Umschalter *Mir zugewiesen* rechts neben dem Titel: nur Einträge zu Tickets, die einem selbst zugewiesen sind
+  (Einbettung: Parameter +mine=1+).
 - Klick auf eine Karte: Popup mit Ticket und Verlauf, der auslösende Kommentar ist hervorgehoben; Mitarbeiter
   können den Auslöser dort aus der SLA-Betrachtung nehmen (z. B. ein "Danke, ok"); Ausnahmen sind in der
   Administration einsehbar und aufhebbar.
@@ -29,7 +31,7 @@ Ohne HR-Plugin gelten alle aktiven, nicht gesperrten Benutzerkonten als intern.
   als erledigt, Kommentare darauf erzeugen keine Frist.
 - Gesamtübersicht unter +/sla/dashboard+, dort auch ein persönlicher Einbett-Link:
   +/sla/dashboard?embed=1&key=<Feed-Schlüssel>+ zeigt die Übersicht ohne Redmine-Rahmen (für iframes/Panels),
-  optional +project_id=<Kennung>+ und +refresh=<Sekunden>+.
+  optional +project_id=<Kennung>+, +mine=1+ und +refresh=<Sekunden>+.
 - Fristberechnung in Arbeitsminuten innerhalb der Geschäftszeiten (Zeitzone in den Plugin-Einstellungen).
 - Beim Anlegen/Ändern eines Projekt-SLAs werden offene Fristen aus der Ticket-Historie aufgebaut.
   Manuell: +bundle exec rake redmine_sla:rebuild [PROJECT=identifier] RAILS_ENV=production+
