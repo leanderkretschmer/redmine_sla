@@ -1,0 +1,60 @@
+<%# Popup-Inhalt: Ticket mit Verlauf, Auslöser hervorgehoben %>
+<% issue = @issue; d = @deadline %>
+<div class="sla-popup" data-deadline-id="<%= d.id %>" data-highlight="<%= d.journal_id ? "sla-journal-#{d.journal_id}" : 'sla-issue-description' %>">
+  <div class="sla-popup-head">
+    <div class="sla-popup-title">
+      <span class="sla-light sla-light-<%= d.traffic_light %>"><%= l("label_sla_#{d.status_label}") %></span>
+      <strong><%= link_to "##{issue.id}", issue_path(issue), target: '_blank' %> <%= h(issue.subject) %></strong>
+    </div>
+    <div class="sla-popup-meta">
+      <span><%= l(:field_project) %>: <%= h(issue.project.name) %></span>
+      <span><%= l(:field_tracker) %>: <%= h(issue.tracker.name) %></span>
+      <span><%= l(:field_status) %>: <%= h(issue.status.name) %></span>
+      <% if issue.assigned_to %><span><%= l(:field_assigned_to) %>: <%= h(issue.assigned_to.name) %></span><% end %>
+      <span class="sla-due"><%= l(:label_sla_due) %>: <%= format_time(d.internal_deadline) %></span>
+    </div>
+  </div>
+
+  <div class="sla-popup-body">
+    <div class="sla-journal <%= 'sla-highlight' unless d.journal_id %>" id="sla-issue-description">
+      <div class="sla-journal-head">
+        <strong><%= h(issue.author&.name) %></strong>
+        <span class="sla-muted"><%= l(:label_sla_ticket_created) %>, <%= format_time(issue.created_on) %></span>
+        <% unless d.journal_id %><span class="sla-trigger-badge"><%= l(:label_sla_trigger) %></span><% end %>
+      </div>
+      <div class="sla-journal-notes wiki">
+        <%= issue.description.present? ? textilizable(issue, :description, attachments: issue.attachments) : content_tag(:em, l(:label_sla_no_description), class: 'sla-muted') %>
+      </div>
+    </div>
+
+    <% @journals.each do |j| %>
+      <% next if j.notes.blank? && j.visible_details.empty? %>
+      <div class="sla-journal <%= 'sla-highlight' if j.id == d.journal_id %> <%= 'sla-private' if j.private_notes? %>" id="sla-journal-<%= j.id %>">
+        <div class="sla-journal-head">
+          <strong><%= h(j.user&.name) %></strong>
+          <span class="sla-muted">#<%= j.indice %>, <%= format_time(j.created_on) %></span>
+          <% if j.private_notes? %><span class="sla-private-badge"><%= l(:field_private_notes) %></span><% end %>
+          <% if j.id == d.journal_id %><span class="sla-trigger-badge"><%= l(:label_sla_trigger) %></span><% end %>
+        </div>
+        <% if j.visible_details.any? %>
+          <ul class="sla-journal-details">
+            <% details_to_strings(j.visible_details).each do |line| %><li><%= line %></li><% end %>
+          </ul>
+        <% end %>
+        <% if j.notes.present? %>
+          <div class="sla-journal-notes wiki"><%= textilizable(j, :notes) %></div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="sla-popup-foot">
+    <% if @can_exclude %>
+      <button type="button" class="sla-exclude-btn" data-url="<%= exclude_sla_deadline_path(d) %>"
+              data-confirm="<%= d.journal_id ? l(:text_sla_exclude_comment_confirm) : l(:text_sla_exclude_ticket_confirm) %>">
+        <%= d.journal_id ? l(:button_sla_exclude_comment) : l(:button_sla_exclude_ticket) %>
+      </button>
+      <span class="sla-help"><%= l(:text_sla_exclude_info) %></span>
+    <% end %>
+  </div>
+</div>

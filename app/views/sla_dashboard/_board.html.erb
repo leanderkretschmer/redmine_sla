@@ -2,11 +2,11 @@
 <% if board.empty? %>
   <p class="nodata"><%= l(:label_sla_no_tickets) %></p>
 <% else %>
-  <div class="sla-board<%= ' sla-board-compact' if local_assigns[:compact] %>">
+  <div class="sla-board<%= ' sla-board-compact' if local_assigns[:compact] %>" data-sla-board>
     <% board.columns.each do |project, deadlines| %>
-      <div class="sla-column">
+      <div class="sla-column" data-project-name="<%= h(project.name) %>" data-project-url="<%= project_sla_url(project) %>">
         <div class="sla-column-header">
-          <h4><%= link_to h(project.name), project_sla_url(project), title: project.identifier, target: (local_assigns[:embed] ? '_top' : nil) %></h4>
+          <h4><a href="<%= project_sla_url(project) %>" class="sla-focus-toggle" title="<%= l(:label_sla_focus_hint) %>"<%= ' target="_top"'.html_safe if local_assigns[:embed] %>><%= h(project.name) %></a></h4>
           <span class="sla-count"><%= deadlines.size %></span>
         </div>
         <div class="sla-column-body">
@@ -17,4 +17,5 @@
       </div>
     <% end %>
   </div>
+  <%= render partial: 'sla_dashboard/scripts' unless local_assigns[:embed] %>
 <% end %>

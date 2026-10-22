@@ -15,8 +15,10 @@ module RedmineSla
 
     def redmine_sla_track_changes
       if saved_change_to_status_id?
-        previous = IssueStatus.find_by(id: status_id_before_last_save)
-        RedmineSla::DeadlineTracker.issue_closed(self) if closed? && !previous&.is_closed?
+        excluded = RedmineSla.excluded_status_ids
+        now_excluded = excluded.include?(status_id)
+        was_excluded = excluded.include?(status_id_before_last_save.to_i)
+        RedmineSla::DeadlineTracker.issue_closed(self) if now_excluded && !was_excluded
       end
       RedmineSla::DeadlineTracker.issue_moved(self) if saved_change_to_project_id? && !saved_change_to_id?
     end

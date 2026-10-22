@@ -12,6 +12,7 @@ class SlaAdminController < ApplicationController
     @holiday = RedmineSla::SlaHoliday.new(date: Date.current)
     @projects_without_sla = Project.active.where.not(id: @settings.map(&:project_id)).sorted.to_a
     @import_year = Date.current.year
+    @exclusions = RedmineSla::SlaExclusion.sorted.includes(:user, :journal, issue: :project).limit(200).to_a
 
     # Ampelzähler je Projekt und gesamt
     zone = RedmineSla.time_zone
@@ -27,5 +28,12 @@ class SlaAdminController < ApplicationController
     end
     @totals = { red: 0, yellow: 0, green: 0 }
     @lights.each_value { |l| l.each { |k, v| @totals[k] += v } }
+  end
+
+  # Alle offenen Fristen aus der Ticket-Historie neu aufbauen (z. B. nach Änderung der Ausschluss-Status).
+  def rebuild
+    RedmineSla::DeadlineTracker.rebuild_all
+    flash[:notice] = l(:notice_sla_rebuilt)
+    redirect_to sla_admin_path(tab: params[:tab].presence || 'projects')
   end
 end

@@ -1,0 +1,105 @@
+<%# Fokus-Modus (Projekt im Vollbild-Grid) und Popup für Einträge; wird einmal pro Seite eingebunden %>
+<% unless @sla_scripts_rendered %>
+<% @sla_scripts_rendered = true %>
+<div class="sla-overlay" id="sla-overlay" hidden>
+  <div class="sla-overlay-box" role="dialog" aria-modal="true">
+    <div class="sla-overlay-bar">
+      <span class="sla-overlay-title"></span>
+      <span class="sla-overlay-actions">
+        <a href="#" class="sla-overlay-open" target="_blank"><%= l(:label_sla_open_issue) %></a>
+        <button type="button" class="sla-overlay-close" title="<%= l(:button_close) %> (Esc)">&times;</button>
+      </span>
+    </div>
+    <div class="sla-overlay-content"></div>
+  </div>
+</div>
+<div class="sla-focus" id="sla-focus" hidden>
+  <div class="sla-focus-bar">
+    <span class="sla-focus-title"></span>
+    <span class="sla-focus-actions">
+      <a href="#" class="sla-focus-project"><%= l(:label_sla_project_page) %></a>
+      <button type="button" class="sla-focus-close"><%= l(:button_sla_all_projects) %></button>
+    </span>
+  </div>
+  <div class="sla-focus-body"></div>
+</div>
+<%= javascript_tag nonce: true do %>
+(function () {
+  var overlay = document.getElementById('sla-overlay');
+  var focus = document.getElementById('sla-focus');
+  if (!overlay || !focus) return;
+  var csrf = (document.querySelector('meta[name="csrf-token"]') || {}).content || '';
+  var strings = { excluded: <%= l(:notice_sla_excluded).to_json.html_safe %>, error: <%= l(:error_sla_request_failed).to_json.html_safe %> };
+
+  // ── Popup ───────────────────────────────────────────────
+  function closeOverlay() { overlay.hidden = true; overlay.querySelector('.sla-overlay-content').innerHTML = ''; }
+  function openOverlay(card) {
+    var url = card.getAttribute('data-detail-url');
+    var issueUrl = card.getAttribute('data-issue-url');
+    var content = overlay.querySelector('.sla-overlay-content');
+    overlay.querySelector('.sla-overlay-title').textContent = card.getAttribute('data-title') || '';
+    overlay.querySelector('.sla-overlay-open').href = issueUrl || '#';
+    content.innerHTML = '<p class="sla-muted">…</p>';
+    overlay.hidden = false;
+    fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' }, credentials: 'same-origin' })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); })
+      .then(function (html) {
+        content.innerHTML = html;
+        var popup = content.querySelector('.sla-popup');
+        var target = popup && document.getElementById(popup.getAttribute('data-highlight'));
+        if (target) target.scrollIntoView({ block: 'center' });
+        var btn = content.querySelector('.sla-exclude-btn');
+        if (btn) btn.addEventListener('click', function () {
+          if (!confirm(btn.getAttribute('data-confirm'))) return;
+          btn.disabled = true;
+          fetch(btn.getAttribute('data-url'), { method: 'POST', credentials: 'same-origin',
+            headers: { 'X-CSRF-Token': csrf, 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json' } })
+            .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+            .then(function () { closeOverlay(); card.remove(); window.location.reload(); })
+            .catch(function () { btn.disabled = false; alert(strings.error); });
+        });
+      })
+      .catch(function () { content.innerHTML = '<p class="sla-muted">' + strings.error + '</p>'; });
+  }
+  overlay.addEventListener('click', function (e) {
+    if (e.target === overlay || e.target.closest('.sla-overlay-close')) closeOverlay();
+  });
+
+  // ── Fokus-Modus ─────────────────────────────────────────
+  var placeholder = null, focused = null;
+  function closeFocus() {
+    if (focused && placeholder) { placeholder.parentNode.insertBefore(focused, placeholder); placeholder.remove(); }
+    focused = null; placeholder = null; focus.hidden = true; document.body.classList.remove('sla-focus-open');
+  }
+  function openFocus(column) {
+    closeFocus();
+    placeholder = document.createElement('div'); placeholder.hidden = true;
+    column.parentNode.insertBefore(placeholder, column);
+    focus.querySelector('.sla-focus-title').textContent = column.getAttribute('data-project-name') || '';
+    focus.querySelector('.sla-focus-project').href = column.getAttribute('data-project-url') || '#';
+    focus.querySelector('.sla-focus-body').appendChild(column);
+    focused = column; focus.hidden = false; document.body.classList.add('sla-focus-open');
+  }
+  focus.querySelector('.sla-focus-close').addEventListener('click', closeFocus);
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    if (!overlay.hidden) closeOverlay(); else if (!focus.hidden) closeFocus();
+  });
+  document.addEventListener('click', function (e) {
+    var toggle = e.target.closest('.sla-focus-toggle');
+    if (toggle && toggle.closest('[data-sla-board], #sla-focus')) {
+      e.preventDefault();
+      var column = toggle.closest('.sla-column');
+      if (focused === column) closeFocus(); else openFocus(column);
+      return;
+    }
+    var card = e.target.closest('.sla-card[data-detail-url]');
+    if (card && !e.target.closest('a.user') && !(e.ctrlKey || e.metaKey || e.button === 1)) {
+      e.preventDefault();
+      openOverlay(card);
+    }
+  });
+})();
+<% end %>
+<% end %>

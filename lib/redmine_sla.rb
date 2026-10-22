@@ -19,6 +19,20 @@ module RedmineSla
       ActiveSupport::TimeZone['UTC']
   end
 
+  # Ticket-Status, bei denen keine Antwortpflicht (mehr) besteht.
+  # Ohne Konfiguration: alle als "geschlossen" markierten Status.
+  def self.excluded_status_ids
+    ids = Array(settings['excluded_status_ids']).map(&:to_i).select(&:positive?)
+    ids = IssueStatus.where(is_closed: true).pluck(:id) if ids.empty?
+    ids
+  end
+
+  def self.status_excluded?(issue)
+    return false unless issue
+
+    excluded_status_ids.include?(issue.status_id)
+  end
+
   # Persönlicher, nur lesender Feed-Schlüssel (Redmine 6: atom_key, davor rss_key).
   def self.feed_key_for(user)
     user.respond_to?(:atom_key) ? user.atom_key : user.rss_key

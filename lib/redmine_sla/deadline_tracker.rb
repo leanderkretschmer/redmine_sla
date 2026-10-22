@@ -2,9 +2,6 @@
 # und erledigt sie, wenn Interne öffentlich antworten oder das Ticket schließen.
 module RedmineSla
   module DeadlineTracker
-    # Geschlossene Tickets werden beim Neuaufbau nur berücksichtigt, wenn sie kürzlich geändert wurden.
-    RECENT_CLOSED_DAYS = 30
-
     class << self
       # Neuer Journal-Eintrag (Kommentar) gespeichert.
       def journal_created(journal)
@@ -15,6 +12,12 @@ module RedmineSla
 
         setting = SlaSetting.for_project(issue.project)
         return unless setting
+
+        # Ticket in ausgeschlossenem Status (z. B. erledigt): nichts Neues, Offenes erledigen
+        if RedmineSla.status_excluded?(issue)
+          issue_closed(issue, journal.user)
+          return
+        end
 
         if InternalUsers.internal?(journal.user)
           respond!(issue, journal) unless journal.private_notes?
@@ -30,6 +33,7 @@ module RedmineSla
         setting = SlaSetting.for_project(issue.project)
         return unless setting
         return if InternalUsers.internal?(issue.author)
+        return if RedmineSla.status_excluded?(issue)
 
         open_deadline!(issue, setting, journal: nil, time: issue.created_on || Time.current)
       rescue StandardError => e
@@ -60,6 +64,23 @@ module RedmineSla
         RedmineSla.log(:error, "issue_moved(#{issue.id}): #{e.class}: #{e.message}")
       end
 
+      # Auslöser (Ticket oder Kommentar) dauerhaft aus der SLA-Betrachtung nehmen.
+      def exclude!(deadline, by_user)
+        SlaExclusion.find_or_create_by!(issue_id: deadline.issue_id, journal_id: deadline.journal_id) do |e|
+          e.user_id = by_user&.id
+        end
+        issue = deadline.issue
+        setting = SlaSetting.for_project(issue.project)
+        rebuild_issue(issue, setting)
+      end
+
+      # Ausnahme aufheben und Fristen des Tickets neu bewerten.
+      def unexclude!(exclusion)
+        issue = exclusion.issue
+        exclusion.destroy
+        rebuild_issue(issue, SlaSetting.for_project(issue.project)) if issue
+      end
+
       # Interne Antwort: alle offenen Fristen des Tickets erledigen.
       def respond!(issue, journal)
         SlaDeadline.pending.for_issue(issue).update_all(
@@ -75,6 +96,8 @@ module RedmineSla
       # unbeantwortete externe Beitrag bestimmt die Frist.
       def open_deadline!(issue, setting, journal:, time:)
         return if SlaDeadline.pending.for_issue(issue).exists?
+        return if RedmineSla.status_excluded?(issue)
+        return if SlaExclusion.excluded?(issue.id, journal&.id)
 
         kind = journal ? :comment : :initial
         response_minutes = setting.response_time_for(issue, kind)
@@ -103,8 +126,7 @@ module RedmineSla
 
         count = 0
         issues = Issue.where(project_id: project.id)
-                      .where('issues.status_id IN (?) OR issues.updated_on >= ?',
-                             IssueStatus.where(is_closed: false).pluck(:id), RECENT_CLOSED_DAYS.days.ago)
+                      .where.not(status_id: RedmineSla.excluded_status_ids)
                       .includes(:author, :tracker, :project)
         issues.find_each do |issue|
           count += 1 if rebuild_issue(issue, setting, purge: false)
@@ -124,17 +146,24 @@ module RedmineSla
       def rebuild_issue(issue, setting, purge: true)
         SlaDeadline.pending.for_issue(issue).delete_all if purge
         return false unless setting
+        return false if RedmineSla.status_excluded?(issue)
 
-        closed_status_ids = IssueStatus.where(is_closed: true).pluck(:id).map(&:to_s)
+        excluded_status_ids = RedmineSla.excluded_status_ids.map(&:to_s)
+        excluded_journal_ids = SlaExclusion.excluded_journal_ids(issue.id)
         pending = nil
-        pending = [issue.created_on, nil] unless InternalUsers.internal?(issue.author)
+        if !InternalUsers.internal?(issue.author) && !SlaExclusion.ticket_excluded?(issue.id)
+          pending = [issue.created_on, nil]
+        end
 
         issue.journals.includes(:user, :details).order(:created_on, :id).each do |j|
-          closes = j.details.any? { |d| d.property == 'attr' && d.prop_key == 'status_id' && closed_status_ids.include?(d.value.to_s) }
-          if InternalUsers.internal?(j.user)
-            # Öffentliche Antwort oder Schließen durch Mitarbeiter erledigt die Antwortpflicht
-            pending = nil if closes || (j.notes.present? && !j.private_notes?)
-          elsif j.notes.present?
+          # Statuswechsel in einen ausgeschlossenen Status (egal durch wen) erledigt die Antwortpflicht
+          excludes = j.details.any? { |d| d.property == 'attr' && d.prop_key == 'status_id' && excluded_status_ids.include?(d.value.to_s) }
+          if excludes
+            pending = nil
+          elsif InternalUsers.internal?(j.user)
+            # Öffentliche Antwort eines Mitarbeiters erledigt die Antwortpflicht
+            pending = nil if j.notes.present? && !j.private_notes?
+          elsif j.notes.present? && !excluded_journal_ids.include?(j.id)
             pending ||= [j.created_on, j]
           end
         end

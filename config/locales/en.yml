@@ -80,6 +80,36 @@ en:
 
   label_sla_resize_hint: Drag the bottom-right corner to resize (remembered in this browser). Drag the block to the top area for full width.
 
+  label_sla_exclusions: Exceptions
+  label_sla_no_exclusions: No exceptions defined.
+  label_sla_trigger: Trigger
+  label_sla_ticket_created: Ticket created
+  label_sla_no_description: no description
+  label_sla_open_issue: Open ticket
+  label_sla_project_page: Project page
+  label_sla_focus_hint: Click to show only this project as a full-page grid (Esc or "All projects" to return)
+  label_sla_excluded_statuses: Statuses without response obligation
+  button_sla_all_projects: All projects
+  button_sla_exclude_comment: Exclude this comment from SLA tracking
+  button_sla_exclude_ticket: Exclude this ticket from SLA tracking
+  button_sla_unexclude: Remove exception
+  button_sla_rebuild: Rebuild deadlines
+  notice_sla_excluded: Excluded from SLA tracking.
+  notice_sla_rebuilt: Open response deadlines have been rebuilt from the ticket history.
+  error_sla_request_failed: The request failed.
+  text_sla_exclusions_help: >-
+    Triggers (ticket creation or a single external comment) that deliberately create no deadline – e.g. a
+    customer's "thanks, ok". Exceptions are set from the popup of an SLA entry and can be removed here.
+  text_sla_exclude_comment_confirm: Ignore this comment as a trigger? The deadline is dropped; a later external comment will create a new one.
+  text_sla_exclude_ticket_confirm: Ignore the creation of this ticket as a trigger? Later external comments still create deadlines.
+  text_sla_exclude_info: For comments like "thanks" or "ok" that need no reply.
+  text_sla_excluded_statuses_help: >-
+    Tickets in these statuses count as done: open deadlines are closed and new comments on such tickets
+    create no deadline. Without a selection all statuses marked as "closed" apply.
+  text_sla_excluded_statuses_rebuild: 'After a change, re-evaluate existing deadlines:'
+  text_sla_rebuild_confirm: Rebuild all open response deadlines from the ticket history?
+  text_sla_rebuild_info: Re-evaluates all open tickets of SLA projects (after changing status rules, holidays or employees).
+
   notice_sla_rule_created: Special rule has been created.
   notice_sla_rule_updated: Special rule has been updated.
   notice_sla_rule_deleted: Special rule has been deleted.

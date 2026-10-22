@@ -1,0 +1,45 @@
+<div class="sla-tab-intro">
+  <p><%= l(:text_sla_exclusions_help) %></p>
+</div>
+
+<% if @exclusions.empty? %>
+  <p class="nodata"><%= l(:label_sla_no_exclusions) %></p>
+<% else %>
+  <table class="list">
+    <thead>
+      <tr>
+        <th><%= l(:field_issue) %></th>
+        <th><%= l(:field_project) %></th>
+        <th><%= l(:label_sla_trigger) %></th>
+        <th><%= l(:field_user) %></th>
+        <th><%= l(:field_created_on) %></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @exclusions.each do |ex| %>
+        <% next unless ex.issue %>
+        <tr class="<%= cycle('odd', 'even') %>">
+          <td><%= link_to "##{ex.issue.id} #{h(ex.issue.subject)}", issue_path(ex.issue, anchor: (ex.journal ? "change-#{ex.journal.id}" : nil)) %></td>
+          <td><%= h(ex.issue.project.name) %></td>
+          <td>
+            <% if ex.for_ticket? %>
+              <%= l(:label_sla_ticket_by) %>: <%= h(ex.issue.author&.name) %>
+            <% elsif ex.journal %>
+              <%= l(:label_sla_comment_by) %>: <%= h(ex.journal.user&.name) %>, <%= format_time(ex.journal.created_on) %>
+              <% if ex.journal.notes.present? %><br><span class="sla-muted">„<%= h(ex.journal.notes.to_s.strip.truncate(90)) %>“</span><% end %>
+            <% else %>
+              <%= l(:label_sla_comment_by) %> (<%= l(:label_deleted) %>)
+            <% end %>
+          </td>
+          <td><%= ex.user ? h(ex.user.name) : '–' %></td>
+          <td><%= format_time(ex.created_at) %></td>
+          <td class="buttons">
+            <%= link_to l(:button_sla_unexclude), sla_exclusion_path(ex), method: :delete,
+                        data: { confirm: l(:text_are_you_sure) }, class: 'icon icon-del' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

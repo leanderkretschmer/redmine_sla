@@ -81,6 +81,37 @@ de:
 
   label_sla_resize_hint: Größe über die rechte untere Ecke ändern (wird im Browser gemerkt). Für volle Breite den Block in den oberen Bereich ziehen.
 
+  label_sla_exclusions: Ausnahmen
+  label_sla_no_exclusions: Keine Ausnahmen vorhanden.
+  label_sla_trigger: Auslöser
+  label_sla_ticket_created: Ticket erstellt
+  label_sla_no_description: keine Beschreibung
+  label_sla_open_issue: Ticket öffnen
+  label_sla_project_page: Projektseite
+  label_sla_focus_hint: Klick zeigt nur dieses Projekt als Raster über die ganze Seite (Esc oder "Alle Projekte" zurück)
+  label_sla_excluded_statuses: Status ohne Antwortpflicht
+  button_sla_all_projects: Alle Projekte
+  button_sla_exclude_comment: Diesen Kommentar aus der SLA-Betrachtung nehmen
+  button_sla_exclude_ticket: Dieses Ticket aus der SLA-Betrachtung nehmen
+  button_sla_unexclude: Ausnahme aufheben
+  button_sla_rebuild: Fristen neu aufbauen
+  notice_sla_excluded: Aus der SLA-Betrachtung genommen.
+  notice_sla_rebuilt: Die offenen Antwortfristen wurden aus der Ticket-Historie neu aufgebaut.
+  error_sla_request_failed: Die Anfrage ist fehlgeschlagen.
+  text_sla_exclusions_help: >-
+    Auslöser (Ticketerstellung oder einzelner externer Kommentar), die bewusst keine Antwortfrist erzeugen –
+    z. B. ein "Danke, ok" des Kunden. Ausnahmen werden über das Popup eines SLA-Eintrags gesetzt und
+    hier wieder aufgehoben.
+  text_sla_exclude_comment_confirm: Diesen Kommentar als Auslöser ignorieren? Die Frist entfällt; ein späterer externer Kommentar löst wieder eine aus.
+  text_sla_exclude_ticket_confirm: Die Erstellung dieses Tickets als Auslöser ignorieren? Spätere externe Kommentare lösen weiterhin Fristen aus.
+  text_sla_exclude_info: Für Kommentare wie "Danke" oder "ok", die keine Antwort brauchen.
+  text_sla_excluded_statuses_help: >-
+    Tickets in diesen Status gelten als erledigt: offene Antwortfristen werden geschlossen, neue Kommentare
+    auf solchen Tickets erzeugen keine Frist. Ohne Auswahl gelten alle als "geschlossen" markierten Status.
+  text_sla_excluded_statuses_rebuild: 'Nach einer Änderung die bestehenden Fristen neu bewerten:'
+  text_sla_rebuild_confirm: Alle offenen Antwortfristen aus der Ticket-Historie neu aufbauen?
+  text_sla_rebuild_info: Bewertet alle offenen Tickets der SLA-Projekte neu (nach Änderung von Status-Regeln, Feiertagen oder Mitarbeitern).
+
   notice_sla_rule_created: Sonderregel wurde erstellt.
   notice_sla_rule_updated: Sonderregel wurde aktualisiert.
   notice_sla_rule_deleted: Sonderregel wurde gelöscht.

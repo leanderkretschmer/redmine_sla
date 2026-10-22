@@ -1,4 +1,6 @@
 <div class="contextual">
+  <%= link_to l(:button_sla_rebuild), rebuild_sla_admin_path(tab: params[:tab]), method: :post, class: 'icon icon-reload',
+              data: { confirm: l(:text_sla_rebuild_confirm) }, title: l(:text_sla_rebuild_info) %>
   <%= link_to l(:label_sla_dashboard), sla_dashboard_path, class: 'icon icon-stats' %>
   <%= link_to l(:label_sla_plugin_settings), { controller: 'settings', action: 'plugin', id: 'redmine_sla' }, class: 'icon icon-settings' %>
 </div>
@@ -27,7 +29,8 @@
 <% tabs = [
      { name: 'projects', partial: 'sla_admin/projects', label: :label_sla_project_settings },
      { name: 'holidays', partial: 'sla_admin/holidays', label: :label_sla_holidays },
-     { name: 'rules',    partial: 'sla_admin/rules',    label: :label_sla_rules }
+     { name: 'rules',    partial: 'sla_admin/rules',    label: :label_sla_rules },
+     { name: 'exclusions', partial: 'sla_admin/exclusions', label: :label_sla_exclusions }
    ] %>
 <%= render_tabs tabs %>
 

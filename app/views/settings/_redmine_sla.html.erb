@@ -39,6 +39,23 @@
 </p>
 
 <fieldset class="box">
+  <legend><%= l(:label_sla_excluded_statuses) %></legend>
+  <p class="sla-help"><%= l(:text_sla_excluded_statuses_help) %></p>
+  <% selected = Array(settings['excluded_status_ids']).map(&:to_s).reject(&:blank?) %>
+  <% selected = IssueStatus.where(is_closed: true).pluck(:id).map(&:to_s) if selected.empty? %>
+  <%= hidden_field_tag 'settings[excluded_status_ids][]', '', id: nil %>
+  <p class="sla-status-list">
+    <% IssueStatus.sorted.each do |st| %>
+      <label class="sla-status-option">
+        <%= check_box_tag 'settings[excluded_status_ids][]', st.id, selected.include?(st.id.to_s), id: "sla_status_#{st.id}" %>
+        <%= h(st.name) %><%= ' (' + l(:field_is_closed) + ')' if st.is_closed? %>
+      </label>
+    <% end %>
+  </p>
+  <p class="sla-help"><%= l(:text_sla_excluded_statuses_rebuild) %> <%= link_to l(:button_sla_rebuild), rebuild_sla_admin_path, method: :post, data: { confirm: l(:text_sla_rebuild_confirm) } %></p>
+</fieldset>
+
+<fieldset class="box">
   <legend><%= l(:label_sla_internal_users) %></legend>
   <p class="sla-help"><%= l(:text_sla_internal_users_help) %></p>
   <p>

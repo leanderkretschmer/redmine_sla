@@ -21,6 +21,12 @@ Ohne HR-Plugin gelten alle aktiven, nicht gesperrten Benutzerkonten als intern.
   pro Projekt eine Spalte, pro Ticket eine Ampelkarte
   (Ticket, Kommentar von / Ticket von, Zeitpunkt, Ablauf).
   Rot = überfällig, Gelb = heute fällig, Grün = im Zeitrahmen.
+- Klick auf einen Projektnamen im Block/Dashboard: Fokus-Modus, nur dieses Projekt als Raster über die ganze Seite.
+- Klick auf eine Karte: Popup mit Ticket und Verlauf, der auslösende Kommentar ist hervorgehoben; Mitarbeiter
+  können den Auslöser dort aus der SLA-Betrachtung nehmen (z. B. ein "Danke, ok"); Ausnahmen sind in der
+  Administration einsehbar und aufhebbar.
+- Status ohne Antwortpflicht (Plugin-Einstellungen, Standard: alle geschlossenen Status): Tickets darin gelten
+  als erledigt, Kommentare darauf erzeugen keine Frist.
 - Gesamtübersicht unter +/sla/dashboard+, dort auch ein persönlicher Einbett-Link:
   +/sla/dashboard?embed=1&key=<Feed-Schlüssel>+ zeigt die Übersicht ohne Redmine-Rahmen (für iframes/Panels),
   optional +project_id=<Kennung>+ und +refresh=<Sekunden>+.
